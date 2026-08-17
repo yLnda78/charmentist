@@ -1,0 +1,1684 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Care &amp; Aftercare — CHARMENTIST</title>
+
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <style>
+
+    /* =========================================================
+       CARE & AFTERCARE — LUXURY EDITORIAL EDITION
+       ========================================================= */
+
+    .care-intro {
+      max-width: 700px;
+      margin-top: 18px;
+      color: var(--muted);
+      line-height: 1.9;
+    }
+
+
+    /* =========================================================
+       CARE PHILOSOPHY
+       ========================================================= */
+
+    .care-feature {
+      margin-top: 65px;
+
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+
+      border-top: 1px solid rgba(0,0,0,.14);
+      border-bottom: 1px solid rgba(0,0,0,.14);
+    }
+
+
+    .care-feature-main {
+      padding: 58px 60px 60px 0;
+
+      border-right: 1px solid rgba(0,0,0,.14);
+    }
+
+
+    .care-feature-main h2 {
+      font-family: var(--serif, Georgia, serif);
+
+      font-size: clamp(2.2rem, 4vw, 4rem);
+
+      font-weight: 400;
+
+      line-height: 1.02;
+
+      max-width: 650px;
+
+      margin: 16px 0 25px;
+    }
+
+
+    .care-feature-main p {
+      max-width: 610px;
+
+      color: var(--muted);
+
+      line-height: 1.9;
+    }
+
+
+    /* =========================================================
+       ORNAMENTAL CARE MARK
+       ========================================================= */
+
+    .care-mark {
+      min-height: 340px;
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      position: relative;
+
+      overflow: hidden;
+    }
+
+
+    .care-mark::before {
+      content: "";
+
+      position: absolute;
+
+      width: 225px;
+      height: 225px;
+
+      border: 1px solid rgba(0,0,0,.12);
+
+      border-radius: 50%;
+
+      transition:
+        transform .7s cubic-bezier(.22,1,.36,1),
+        border-color .5s ease;
+    }
+
+
+    .care-mark::after {
+      content: "";
+
+      position: absolute;
+
+      width: 155px;
+      height: 155px;
+
+      border: 1px solid rgba(0,0,0,.1);
+
+      transform: rotate(45deg);
+
+      transition:
+        transform .7s cubic-bezier(.22,1,.36,1);
+    }
+
+
+    .care-mark:hover::before {
+      transform: scale(1.13);
+
+      border-color: rgba(0,0,0,.2);
+    }
+
+
+    .care-mark:hover::after {
+      transform:
+        rotate(135deg)
+        scale(.9);
+    }
+
+
+    .care-mark-inner {
+      position: relative;
+
+      z-index: 2;
+
+      text-align: center;
+    }
+
+
+    .care-mark-symbol {
+      font-family: var(--serif, Georgia, serif);
+
+      font-size: 2rem;
+
+      margin-bottom: 10px;
+    }
+
+
+    .care-mark-label {
+      font-size: .65rem;
+
+      letter-spacing: .2em;
+
+      text-transform: uppercase;
+
+      color: var(--muted);
+
+      line-height: 1.7;
+    }
+
+
+    /* =========================================================
+       CARE CARDS
+       ========================================================= */
+
+    .care-grid {
+      display: grid;
+
+      grid-template-columns: repeat(4, 1fr);
+
+      border-top: 1px solid rgba(0,0,0,.14);
+
+      border-left: 1px solid rgba(0,0,0,.14);
+
+      margin-top: 42px;
+    }
+
+
+    .care-card {
+      min-height: 270px;
+
+      padding: 30px 28px 32px;
+
+      border-right: 1px solid rgba(0,0,0,.14);
+
+      border-bottom: 1px solid rgba(0,0,0,.14);
+
+      position: relative;
+
+      overflow: hidden;
+
+      display: flex;
+
+      flex-direction: column;
+
+      justify-content: space-between;
+
+      transition:
+        transform .45s cubic-bezier(.22,1,.36,1),
+        background .45s ease,
+        box-shadow .45s ease;
+    }
+
+
+    .care-card::before {
+      content: "";
+
+      position: absolute;
+
+      left: 0;
+      bottom: 0;
+
+      width: 0;
+      height: 2px;
+
+      background: currentColor;
+
+      transition:
+        width .55s cubic-bezier(.22,1,.36,1);
+    }
+
+
+    .care-card::after {
+      content: "";
+
+      position: absolute;
+
+      width: 160px;
+      height: 160px;
+
+      right: -105px;
+      bottom: -105px;
+
+      border: 1px solid rgba(0,0,0,.08);
+
+      border-radius: 50%;
+
+      transition:
+        transform .65s cubic-bezier(.22,1,.36,1);
+    }
+
+
+    .care-card:hover {
+      transform: translateY(-7px);
+
+      background: rgba(0,0,0,.025);
+
+      box-shadow:
+        0 18px 42px rgba(0,0,0,.07),
+        0 3px 10px rgba(0,0,0,.03);
+
+      z-index: 2;
+    }
+
+
+    .care-card:hover::before {
+      width: 100%;
+    }
+
+
+    .care-card:hover::after {
+      transform: scale(1.6);
+    }
+
+
+    /* =========================================================
+       NUMBER
+       ========================================================= */
+
+    .care-number {
+      font-family: var(--serif, Georgia, serif);
+
+      font-size: .72rem;
+
+      letter-spacing: .14em;
+
+      color: var(--muted);
+
+      transition:
+        transform .4s ease,
+        letter-spacing .4s ease;
+    }
+
+
+    .care-card:hover .care-number {
+      transform: translateX(4px);
+
+      letter-spacing: .22em;
+    }
+
+
+    /* =========================================================
+       SYMBOL
+       ========================================================= */
+
+    .care-symbol {
+      width: 40px;
+      height: 40px;
+
+      border: 1px solid rgba(0,0,0,.24);
+
+      border-radius: 50%;
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      font-family: var(--serif, Georgia, serif);
+
+      font-size: .9rem;
+
+      margin: 22px 0 20px;
+
+      position: relative;
+
+      z-index: 2;
+
+      transition:
+        transform .55s cubic-bezier(.22,1,.36,1),
+        border-radius .55s ease,
+        background .4s ease;
+    }
+
+
+    .care-symbol::after {
+      content: "";
+
+      position: absolute;
+
+      inset: 4px;
+
+      border: 1px solid transparent;
+
+      border-radius: inherit;
+
+      transition:
+        border-color .4s ease,
+        transform .55s ease;
+    }
+
+
+    .care-card:hover .care-symbol {
+      transform:
+        rotate(12deg)
+        scale(1.08);
+
+      border-radius: 34%;
+
+      background: rgba(0,0,0,.025);
+    }
+
+
+    .care-card:hover .care-symbol::after {
+      border-color: rgba(0,0,0,.13);
+
+      transform: rotate(-24deg);
+    }
+
+
+    /* =========================================================
+       CARD TEXT
+       ========================================================= */
+
+    .care-card h4 {
+      margin: 0;
+
+      font-size: .88rem;
+
+      letter-spacing: .09em;
+
+      text-transform: uppercase;
+
+      position: relative;
+
+      z-index: 2;
+
+      transition:
+        transform .4s ease,
+        letter-spacing .4s ease;
+    }
+
+
+    .care-card:hover h4 {
+      transform: translateX(4px);
+
+      letter-spacing: .12em;
+    }
+
+
+    .care-card p {
+      margin: 10px 0 0;
+
+      max-width: 250px;
+
+      line-height: 1.75;
+
+      position: relative;
+
+      z-index: 2;
+
+      transition:
+        transform .4s ease;
+    }
+
+
+    .care-card:hover p {
+      transform: translateX(4px);
+    }
+
+
+    .care-arrow {
+      position: absolute;
+
+      right: 25px;
+      bottom: 25px;
+
+      opacity: .35;
+
+      transition:
+        transform .5s cubic-bezier(.22,1,.36,1),
+        opacity .3s ease;
+    }
+
+
+    .care-card:hover .care-arrow {
+      transform:
+        translate(5px,-5px)
+        scale(1.15);
+
+      opacity: .85;
+    }
+
+
+    /* =========================================================
+       AFTERCARE SERVICES
+       ========================================================= */
+
+    .aftercare-section {
+      margin-top: 75px;
+
+      display: grid;
+
+      grid-template-columns: .8fr 1.2fr;
+
+      gap: 80px;
+    }
+
+
+    .aftercare-heading {
+      align-self: start;
+
+      position: sticky;
+
+      top: 100px;
+    }
+
+
+    .aftercare-heading h2 {
+      font-family: var(--serif, Georgia, serif);
+
+      font-size: 2.5rem;
+
+      line-height: 1.08;
+
+      font-weight: 400;
+
+      margin-top: 16px;
+    }
+
+
+    .aftercare-heading p {
+      max-width: 320px;
+
+      color: var(--muted);
+
+      line-height: 1.8;
+
+      margin-top: 18px;
+    }
+
+
+    .aftercare-list {
+      border-top: 1px solid rgba(0,0,0,.14);
+    }
+
+
+    .aftercare-row {
+      display: grid;
+
+      grid-template-columns: 70px 1fr auto;
+
+      gap: 25px;
+
+      align-items: center;
+
+      padding: 25px 0;
+
+      border-bottom: 1px solid rgba(0,0,0,.14);
+
+      transition:
+        padding-left .35s ease,
+        background .35s ease;
+    }
+
+
+    .aftercare-row:hover {
+      padding-left: 10px;
+    }
+
+
+    .aftercare-number {
+      font-family: var(--serif, Georgia, serif);
+
+      color: var(--muted);
+
+      font-size: .75rem;
+
+      letter-spacing: .12em;
+    }
+
+
+    .aftercare-row h4 {
+      margin: 0 0 5px;
+
+      font-size: .9rem;
+
+      letter-spacing: .06em;
+
+      text-transform: uppercase;
+    }
+
+
+    .aftercare-row p {
+      margin: 0;
+
+      color: var(--muted);
+
+      line-height: 1.7;
+    }
+
+
+    .aftercare-status {
+      font-size: .68rem;
+
+      text-transform: uppercase;
+
+      letter-spacing: .12em;
+
+      color: var(--muted);
+
+      white-space: nowrap;
+    }
+
+
+    /* =========================================================
+       FAQ
+       ========================================================= */
+
+    .faq-layout {
+      display: grid;
+
+      grid-template-columns: .75fr 1.25fr;
+
+      gap: 90px;
+
+      margin-top: 20px;
+    }
+
+
+    .faq-heading {
+      position: sticky;
+
+      top: 100px;
+
+      align-self: start;
+    }
+
+
+    .faq-heading h2 {
+      font-family: var(--serif, Georgia, serif);
+
+      font-weight: 400;
+
+      font-size: 2.4rem;
+
+      line-height: 1.1;
+
+      margin-top: 16px;
+    }
+
+
+    .faq-heading p {
+      max-width: 300px;
+
+      color: var(--muted);
+
+      line-height: 1.8;
+
+      margin-top: 18px;
+    }
+
+
+    .faq-item {
+      border-top: 1px solid rgba(0,0,0,.15);
+    }
+
+
+    .faq-item:last-child {
+      border-bottom: 1px solid rgba(0,0,0,.15);
+    }
+
+
+    .faq-q {
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      gap: 30px;
+
+      padding: 22px 0;
+
+      cursor: pointer;
+
+      font-size: .9rem;
+    }
+
+
+    .faq-toggle {
+      font-family: var(--serif, Georgia, serif);
+
+      font-size: 1.2rem;
+
+      transition:
+        transform .35s cubic-bezier(.22,1,.36,1);
+    }
+
+
+    .faq-a {
+      max-height: 0;
+
+      overflow: hidden;
+
+      opacity: 0;
+
+      transition:
+        max-height .4s ease,
+        opacity .25s ease,
+        padding .35s ease;
+    }
+
+
+    .faq-a p,
+    .faq-a ul {
+      color: var(--muted);
+
+      line-height: 1.85;
+    }
+
+
+    .faq-a ul {
+      padding-left: 18px;
+    }
+
+
+    .faq-item[data-open="true"] .faq-a {
+      max-height: 650px;
+
+      opacity: 1;
+
+      padding-bottom: 24px;
+    }
+
+
+    .faq-item[data-open="true"] .faq-toggle {
+      transform: rotate(45deg);
+    }
+
+
+    /* =========================================================
+       CTA
+       ========================================================= */
+
+    .care-cta {
+      margin-top: 75px;
+
+      padding: 55px 0;
+
+      border-top: 1px solid rgba(255,255,255,.2);
+
+      border-bottom: 1px solid rgba(255,255,255,.2);
+    }
+
+
+    .care-cta-inner {
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      gap: 40px;
+    }
+
+
+    .care-cta h3 {
+      margin: 10px 0 0;
+    }
+
+
+    /* =========================================================
+       RESPONSIVE
+       ========================================================= */
+
+    @media (max-width: 1000px) {
+
+      .care-feature {
+        grid-template-columns: 1fr;
+      }
+
+
+      .care-feature-main {
+        border-right: 0;
+
+        border-bottom: 1px solid rgba(0,0,0,.14);
+
+        padding-right: 0;
+      }
+
+
+      .care-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+
+      .aftercare-section {
+        grid-template-columns: 1fr;
+
+        gap: 45px;
+      }
+
+
+      .aftercare-heading {
+        position: static;
+      }
+
+
+      .faq-layout {
+        grid-template-columns: 1fr;
+
+        gap: 45px;
+      }
+
+
+      .faq-heading {
+        position: static;
+      }
+
+    }
+
+
+    @media (max-width: 620px) {
+
+      .care-grid {
+        grid-template-columns: 1fr;
+      }
+
+
+      .care-card {
+        min-height: 230px;
+      }
+
+
+      .care-feature-main {
+        padding: 38px 0;
+      }
+
+
+      .care-mark {
+        min-height: 280px;
+      }
+
+
+      .aftercare-row {
+        grid-template-columns: 45px 1fr;
+      }
+
+
+      .aftercare-status {
+        grid-column: 2;
+      }
+
+
+      .care-cta-inner {
+        flex-direction: column;
+
+        align-items: flex-start;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body data-page="care-aftercare.html">
+
+
+<div id="site-header" data-variant="light"></div>
+
+
+<!-- =========================================================
+     HERO
+     ========================================================= -->
+
+<section
+  class="hero"
+  style="
+    min-height:46vh;
+    background:none;
+    color:var(--text);
+    align-items:center;
+  "
+>
+
+  <div
+    class="hero-inner"
+    style="color:var(--text);"
+  >
+
+    <div class="hero-left">
+
+      <span
+        class="hero-vertical"
+        style="opacity:.5;"
+      >
+        Care For What You Keep
+      </span>
+
+
+      <div>
+
+        <div
+          class="hero-num"
+          style="opacity:.5;"
+        >
+        </div>
+
+
+        <h1 class="hero-title">
+          CARE &amp;<br>AFTERCARE
+        </h1>
+
+
+        <p
+          class="hero-sub"
+          style="color:var(--muted);"
+        >
+          Thoughtful care preserves the beauty, finish,
+          and integrity of your CHARMENTIST jewellery
+          for years to come.
+        </p>
+
+
+        <a
+          class="btn btn-outline"
+          href="#details"
+        >
+          Care Guide →
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     INTRO / PHILOSOPHY
+     ========================================================= -->
+
+<section
+  class="section-pad"
+  id="details"
+>
+
+  <div class="wrap">
+
+    <div class="eyebrow">
+      The CHARMENTIST Care Standard
+    </div>
+
+
+    <p class="care-intro">
+      Fine jewellery is made to be worn, but it deserves
+      thoughtful handling. Simple daily habits can help
+      preserve the finish, gemstones, settings, and overall
+      condition of your CHARMENTIST piece.
+    </p>
+
+
+    <div class="care-feature">
+
+
+      <div class="care-feature-main">
+
+        <div class="eyebrow">
+          Everyday Ritual
+        </div>
+
+
+        <h2>
+          Beauty is preserved through care.
+        </h2>
+
+
+        <p>
+          From the way you store your jewellery to the moments
+          when you choose to remove it, small details make a
+          meaningful difference. Treat each piece with care and
+          allow it to remain part of your wardrobe for years to come.
+        </p>
+
+      </div>
+
+
+      <div class="care-mark">
+
+        <div class="care-mark-inner">
+
+          <div class="care-mark-symbol">
+            ✦
+          </div>
+
+          <div class="care-mark-label">
+            CHARMENTIST
+            <br>
+            Care &amp; Aftercare
+          </div>
+
+        </div>
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     EVERYDAY CARE
+     ========================================================= -->
+
+<section
+  class="section-pad"
+  style="padding-top:0;"
+>
+
+  <div class="wrap">
+
+    <div class="eyebrow">
+      Everyday Care
+    </div>
+
+
+    <div class="care-grid">
+
+
+      <!-- 01 -->
+
+      <div class="care-card">
+
+        <div>
+
+          <div class="care-number">
+            01
+          </div>
+
+
+          <div class="care-symbol">
+            ◇
+          </div>
+
+
+          <h4>
+            Clean Gently
+          </h4>
+
+
+          <p class="small">
+            Gently wipe your jewellery with a soft,
+            clean cloth after wearing to remove oils
+            and everyday residue.
+          </p>
+
+        </div>
+
+
+        <span class="care-arrow">
+          ↗
+        </span>
+
+      </div>
+
+
+
+      <!-- 02 -->
+
+      <div class="care-card">
+
+        <div>
+
+          <div class="care-number">
+            02
+          </div>
+
+
+          <div class="care-symbol">
+            □
+          </div>
+
+
+          <h4>
+            Store Separately
+          </h4>
+
+
+          <p class="small">
+            Keep each creation in its dedicated pouch
+            or lined box to help prevent scratches,
+            tangling, and unnecessary friction.
+          </p>
+
+        </div>
+
+
+        <span class="care-arrow">
+          ↗
+        </span>
+
+      </div>
+
+
+
+      <!-- 03 -->
+
+      <div class="care-card">
+
+        <div>
+
+          <div class="care-number">
+            03
+          </div>
+
+
+          <div class="care-symbol">
+            ×
+          </div>
+
+
+          <h4>
+            Remove Before
+          </h4>
+
+
+          <p class="small">
+            Remove jewellery before swimming, exercising,
+            showering, sleeping, or applying perfume,
+            lotion, and cosmetics.
+          </p>
+
+        </div>
+
+
+        <span class="care-arrow">
+          ↗
+        </span>
+
+      </div>
+
+
+
+      <!-- 04 -->
+
+      <div class="care-card">
+
+        <div>
+
+          <div class="care-number">
+            04
+          </div>
+
+
+          <div class="care-symbol">
+            ◌
+          </div>
+
+
+          <h4>
+            Inspect Regularly
+          </h4>
+
+
+          <p class="small">
+            Periodically check visible settings, clasps,
+            and gemstone mounts for signs of movement,
+            looseness, or damage.
+          </p>
+
+        </div>
+
+
+        <span class="care-arrow">
+          ↗
+        </span>
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     AFTERCARE SERVICES
+     ========================================================= -->
+
+<section
+  class="section-pad"
+  style="padding-top:0;"
+>
+
+  <div class="wrap">
+
+    <div class="aftercare-section">
+
+
+      <div class="aftercare-heading">
+
+        <div class="eyebrow">
+          Aftercare Services
+        </div>
+
+
+        <h2>
+          Care beyond the first wear.
+        </h2>
+
+
+        <p>
+          When your piece needs more than everyday care,
+          our team can help assess the appropriate next
+          step for maintenance or servicing.
+        </p>
+
+      </div>
+
+
+
+      <div class="aftercare-list">
+
+
+        <!-- 01 -->
+
+        <div class="aftercare-row">
+
+          <div class="aftercare-number">
+            01
+          </div>
+
+          <div>
+
+            <h4>
+              Cleaning &amp; Refresh
+            </h4>
+
+            <p class="small">
+              Professional cleaning and refreshing
+              where appropriate for the piece.
+            </p>
+
+          </div>
+
+          <div class="aftercare-status">
+            By Request
+          </div>
+
+        </div>
+
+
+
+        <!-- 02 -->
+
+        <div class="aftercare-row">
+
+          <div class="aftercare-number">
+            02
+          </div>
+
+          <div>
+
+            <h4>
+              Ring Resizing
+            </h4>
+
+            <p class="small">
+              Sizing assistance for eligible ring designs,
+              subject to construction and material.
+            </p>
+
+          </div>
+
+          <div class="aftercare-status">
+            By Request
+          </div>
+
+        </div>
+
+
+
+        <!-- 03 -->
+
+        <div class="aftercare-row">
+
+          <div class="aftercare-number">
+            03
+          </div>
+
+          <div>
+
+            <h4>
+              Repair &amp; Restoration
+            </h4>
+
+            <p class="small">
+              Assessment of eligible pieces requiring
+              repair, restoration, or stone-related servicing.
+            </p>
+
+          </div>
+
+          <div class="aftercare-status">
+            Assessment
+          </div>
+
+        </div>
+
+
+
+        <!-- 04 -->
+
+        <div class="aftercare-row">
+
+          <div class="aftercare-number">
+            04
+          </div>
+
+          <div>
+
+            <h4>
+              Care Consultation
+            </h4>
+
+            <p class="small">
+              Guidance on storage, cleaning, wear,
+              materials, and appropriate care practices.
+            </p>
+
+          </div>
+
+          <div class="aftercare-status">
+            Available
+          </div>
+
+        </div>
+
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     FAQ
+     ========================================================= -->
+
+<section
+  class="section-pad"
+  style="padding-top:0;"
+>
+
+  <div class="wrap">
+
+    <div class="faq-layout">
+
+
+      <div class="faq-heading">
+
+        <div class="eyebrow">
+          Frequently Asked
+        </div>
+
+
+        <h2>
+          Questions,<br>
+          Answered.
+        </h2>
+
+
+        <p>
+          Practical guidance for keeping your
+          CHARMENTIST jewellery in beautiful condition.
+        </p>
+
+      </div>
+
+
+
+      <div>
+
+
+        <!-- FAQ 01 -->
+
+        <div
+          class="faq-item"
+          data-open="false"
+        >
+
+          <div class="faq-q">
+
+            <span>
+              How often should I have my jewelry checked?
+            </span>
+
+            <span class="faq-toggle">
+              +
+            </span>
+
+          </div>
+
+
+          <div class="faq-a">
+
+            <p class="small">
+              For pieces worn frequently, we recommend having
+              the jewellery inspected periodically, particularly
+              if it contains gemstones or delicate settings.
+              Contact our team if you notice any looseness,
+              movement, or visible damage.
+            </p>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- FAQ 02 -->
+
+        <div
+          class="faq-item"
+          data-open="false"
+        >
+
+          <div class="faq-q">
+
+            <span>
+              Can I clean my jewelry at home?
+            </span>
+
+            <span class="faq-toggle">
+              +
+            </span>
+
+          </div>
+
+
+          <div class="faq-a">
+
+            <p class="small">
+              For many pieces, gentle cleaning with a soft cloth
+              is appropriate. If using water and mild soap, make
+              sure the specific material and gemstone are suitable
+              for this method. When in doubt, contact us before
+              cleaning a delicate piece.
+            </p>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- FAQ 03 -->
+
+        <div
+          class="faq-item"
+          data-open="false"
+        >
+
+          <div class="faq-q">
+
+            <span>
+              Can I use an ultrasonic cleaner?
+            </span>
+
+            <span class="faq-toggle">
+              +
+            </span>
+
+          </div>
+
+
+          <div class="faq-a">
+
+            <p class="small">
+              We do not recommend using ultrasonic cleaners
+              without first confirming that the specific piece
+              and gemstones are suitable. Certain gemstones,
+              treatments, settings, and delicate constructions
+              may be unsuitable for ultrasonic cleaning.
+            </p>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- FAQ 04 -->
+
+        <div
+          class="faq-item"
+          data-open="false"
+        >
+
+          <div class="faq-q">
+
+            <span>
+              Which substances should I avoid?
+            </span>
+
+            <span class="faq-toggle">
+              +
+            </span>
+
+          </div>
+
+
+          <div class="faq-a">
+
+            <p class="small">
+              Avoid prolonged exposure to perfume, cosmetics,
+              lotions, chlorine, household chemicals, and other
+              harsh substances. Remove jewellery before swimming,
+              exercising, showering, and applying beauty products.
+            </p>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- FAQ 05 -->
+
+        <div
+          class="faq-item"
+          data-open="false"
+        >
+
+          <div class="faq-q">
+
+            <span>
+              What should I do if a gemstone feels loose?
+            </span>
+
+            <span class="faq-toggle">
+              +
+            </span>
+
+          </div>
+
+
+          <div class="faq-a">
+
+            <p class="small">
+              Stop wearing the piece and contact CHARMENTIST
+              as soon as possible. Avoid attempting to tighten
+              or repair the setting yourself. Our team can advise
+              you on the appropriate assessment and next steps.
+            </p>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- FAQ 06 -->
+
+        <div
+          class="faq-item"
+          data-open="false"
+        >
+
+          <div class="faq-q">
+
+            <span>
+              How do I request aftercare?
+            </span>
+
+            <span class="faq-toggle">
+              +
+            </span>
+
+          </div>
+
+
+          <div class="faq-a">
+
+            <p class="small">
+              Contact our team through the Contact page with
+              your order information and a description of the
+              care or service you require. We will guide you
+              through the appropriate next step.
+            </p>
+
+          </div>
+
+        </div>
+
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     CTA
+     ========================================================= -->
+
+<section class="dark-band section-pad">
+
+  <div class="wrap">
+
+    <div class="care-cta">
+
+      <div class="care-cta-inner">
+
+        <div>
+
+          <p
+            class="eyebrow"
+            style="margin:0;"
+          >
+            Need Hands-On Help?
+          </p>
+
+
+          <h3
+            class="serif"
+            style="font-size:1.6rem;"
+          >
+            Let us help you care for your piece.
+          </h3>
+
+        </div>
+
+
+        <a
+          class="btn btn-outline"
+          href="contact.html"
+          style="
+            border-color:rgba(255,255,255,.55);
+            color:#fff;
+          "
+        >
+          Contact Us →
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     FOOTER
+     ========================================================= -->
+
+<div id="site-footer"></div>
+
+
+<script src="assets/js/products.js"></script>
+<script src="assets/js/auth.js"></script>
+<script src="assets/js/store.js"></script>
+<script src="assets/js/main.js"></script>
+
+
+<script>
+
+  document
+    .querySelectorAll('.faq-item')
+    .forEach(item => {
+
+      const question =
+        item.querySelector('.faq-q');
+
+
+      question.addEventListener('click', () => {
+
+        const isOpen =
+          item.getAttribute('data-open') === 'true';
+
+
+        document
+          .querySelectorAll('.faq-item')
+          .forEach(other => {
+
+            if (other !== item) {
+
+              other.setAttribute(
+                'data-open',
+                'false'
+              );
+
+            }
+
+          });
+
+
+        item.setAttribute(
+          'data-open',
+          isOpen ? 'false' : 'true'
+        );
+
+      });
+
+    });
+
+</script>
+
+
+</body>
+</html>

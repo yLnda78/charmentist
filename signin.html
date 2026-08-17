@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sign In — CHARMENTIST</title><link rel="stylesheet" href="assets/css/style.css">
+<style>
+  .signin-wrap{ min-height:70vh; display:flex; align-items:center; justify-content:center; padding:60px 20px; }
+  .signin-card{ width:100%; max-width:420px; text-align:center; }
+  .signin-logo{ border:1px solid var(--text); padding:14px 18px; display:inline-block; font-family:var(--serif); font-weight:600; letter-spacing:.06em; margin-bottom:36px; }
+  .signin-card h1{ font-family:var(--serif); font-size:1.7rem; margin-bottom:8px; }
+  .signin-sub{ color:var(--muted); font-size:.85rem; margin-bottom:32px; }
+  .divider{ display:flex; align-items:center; gap:14px; color:var(--muted); font-size:.78rem; margin:24px 0; }
+  .divider::before, .divider::after{ content:''; flex:1; height:1px; background:var(--line); }
+  .email-row{ position:relative; margin-bottom:10px; }
+  .email-row input{ width:100%; padding:14px 46px 14px 16px; border:1px solid var(--text); background:var(--white); font-size:.88rem; }
+  .email-row button{ position:absolute; right:6px; top:50%; transform:translateY(-50%); width:34px; height:34px; border:none; background:transparent; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+  .email-row button svg{ width:18px; height:18px; }
+  .email-note{ font-size:.72rem; min-height:16px; margin-bottom:14px; text-align:left; }
+  .email-note.is-error{ color:#b23333; }
+  .email-note.is-success{ color:#3a6b3a; }
+  .news-check{ display:flex; align-items:center; gap:8px; font-size:.78rem; margin-bottom:22px; justify-content:center; cursor:pointer; }
+  .terms-text{ font-size:.72rem; color:var(--muted); line-height:1.6; }
+  .terms-text a{ color:var(--text); text-decoration:underline; }
+</style>
+</head>
+<body data-page="signin.html">
+<div id="site-header" data-variant="light"></div>
+
+<section class="signin-wrap">
+  <div class="signin-card">
+    <div class="signin-logo">CHARMENTIST</div>
+    <h1 id="signin-title">Sign In</h1>
+    <p class="signin-sub" id="signin-sub">Enter your email to sign in or create an account</p>
+
+    <div class="email-row" id="email-step">
+      <input type="email" id="signin-email" placeholder="Email" aria-label="Email address">
+      <button type="button" id="signin-email-next" aria-label="Continue">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+      </button>
+    </div>
+    <p class="email-note" id="signin-note"></p>
+
+    <div id="password-step" style="display:none; text-align:left;">
+      <div class="field" style="margin-bottom:14px;">
+        <label id="password-label" style="font-size:.72rem; color:var(--muted); display:block; margin-bottom:6px;">Password</label>
+        <input type="password" id="signin-password" style="width:100%; padding:14px 16px; border:1px solid var(--text); background:var(--white); font-size:.88rem;">
+      </div>
+      <div class="field" id="confirm-password-field" style="display:none; margin-bottom:14px;">
+        <label style="font-size:.72rem; color:var(--muted); display:block; margin-bottom:6px;">Confirm Password</label>
+        <input type="password" id="signin-password-confirm" style="width:100%; padding:14px 16px; border:1px solid var(--text); background:var(--white); font-size:.88rem;">
+      </div>
+      <label class="news-check" id="news-check-row" style="display:none; justify-content:flex-start;"><input type="checkbox" id="signin-news"> Email me with news and offers</label>
+      <button type="button" class="btn btn-dark" style="width:100%; justify-content:center; margin-top:6px;" id="password-submit">Sign In</button>
+      <button type="button" style="background:none;border:none;color:var(--muted);font-size:.75rem;text-decoration:underline;cursor:pointer;margin-top:14px;" id="use-different-email">Use a different email</button>
+    </div>
+
+    <p class="terms-text" style="margin-top:24px;">By continuing, you agree to our <a href="terms-conditions.html">Terms &amp; Conditions</a> and <a href="privacy-legal.html">Privacy Policy</a>.</p>
+  </div>
+</section>
+
+<div id="site-footer"></div>
+<script src="assets/js/products.js"></script>
+<script src="assets/js/auth.js"></script>
+<script src="assets/js/store.js"></script>
+<script src="assets/js/main.js"></script>
+<script>
+// -----------------------------------------------------------------------
+// Real (client-side) sign in / sign up flow using CharmAuth (see
+// assets/js/auth.js). Step 1: enter an email. If that email already has
+// an account on this device/browser, you're asked for its password —
+// wrong password is rejected. If it doesn't, you're asked to create one.
+// Session persists in localStorage until "Logout" is clicked on
+// account.html — it will not silently log you out on its own.
+//
+// This is still front-end only: there's no server checking that the
+// email address is real / reachable. See the top of auth.js for what a
+// real backend would add (verification emails, hashed passwords, etc).
+// -----------------------------------------------------------------------
+(function(){
+  if(typeof CharmAuth !== 'undefined' && CharmAuth.isLoggedIn()){
+    window.location.href = 'account.html';
+    return;
+  }
+
+  const emailInput = document.getElementById('signin-email');
+  const emailStep = document.getElementById('email-step');
+  const emailNextBtn = document.getElementById('signin-email-next');
+  const note = document.getElementById('signin-note');
+
+  const passwordStep = document.getElementById('password-step');
+  const passwordInput = document.getElementById('signin-password');
+  const passwordLabel = document.getElementById('password-label');
+  const confirmField = document.getElementById('confirm-password-field');
+  const confirmInput = document.getElementById('signin-password-confirm');
+  const newsRow = document.getElementById('news-check-row');
+  const passwordSubmit = document.getElementById('password-submit');
+  const useDifferentEmail = document.getElementById('use-different-email');
+  const title = document.getElementById('signin-title');
+  const sub = document.getElementById('signin-sub');
+
+  let mode = null; // 'login' | 'register'
+  let currentEmail = '';
+
+  // Stricter shape check: proper local-part / domain characters, no
+  // leading/trailing/double dots, and a real-looking 2+ letter TLD.
+  function isValidEmailFormat(value){
+    return /^[a-zA-Z0-9](?:[a-zA-Z0-9._%+-]*[a-zA-Z0-9])?@[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?)*\.[a-zA-Z]{2,}$/.test(value);
+  }
+
+  // Real domain check (no backend needed): asks a public DNS-over-HTTPS
+  // resolver whether the email's domain actually has mail servers (MX),
+  // or at least exists at all (A record). Catches made-up domains like
+  // "asdasd@asdasd123xyz.com". If the DNS check itself fails (offline,
+  // network blocked), we don't punish the user for that — we fall back
+  // to accepting the format-valid email instead of hard-blocking them.
+  async function domainAcceptsMail(domain){
+    try{
+      const mxRes = await fetch(`https://dns.google/resolve?name=${encodeURIComponent(domain)}&type=MX`);
+      const mxData = await mxRes.json();
+      if(mxData.Status === 0 && Array.isArray(mxData.Answer) && mxData.Answer.length) return true;
+      const aRes = await fetch(`https://dns.google/resolve?name=${encodeURIComponent(domain)}&type=A`);
+      const aData = await aRes.json();
+      return aData.Status === 0 && Array.isArray(aData.Answer) && aData.Answer.length > 0;
+    }catch(e){
+      return true; // DNS check unavailable — don't block on a network hiccup
+    }
+  }
+
+  function setNote(msg, ok){
+    note.textContent = msg || '';
+    note.className = 'email-note' + (msg ? (ok ? ' is-success' : ' is-error') : '');
+  }
+
+  async function goToPasswordStep(email){
+    currentEmail = email;
+    emailStep.style.display = 'none';
+    passwordStep.style.display = 'block';
+    passwordInput.value = '';
+    passwordInput.disabled = true;
+    passwordSubmit.disabled = true;
+    title.textContent = 'Checking…';
+    sub.textContent = email;
+
+    const exists = await CharmAuth.emailExists(email);
+
+    passwordInput.disabled = false;
+    passwordSubmit.disabled = false;
+    passwordInput.focus();
+    if(exists){
+      mode = 'login';
+      title.textContent = 'Welcome Back';
+      sub.textContent = email;
+      passwordLabel.textContent = 'Password';
+      confirmField.style.display = 'none';
+      newsRow.style.display = 'none';
+      passwordSubmit.textContent = 'Sign In';
+    } else {
+      mode = 'register';
+      title.textContent = 'Create Your Account';
+      sub.textContent = email;
+      passwordLabel.textContent = 'Create a Password';
+      confirmField.style.display = 'block';
+      newsRow.style.display = 'flex';
+      passwordSubmit.textContent = 'Create Account';
+    }
+  }
+
+  emailNextBtn.addEventListener('click', async () => {
+    const value = emailInput.value.trim();
+    if(!isValidEmailFormat(value)){
+      setNote('Please enter a valid email address.', false);
+      return;
+    }
+    const domain = value.split('@')[1];
+    emailInput.disabled = true;
+    emailNextBtn.disabled = true;
+    setNote('Checking email…', true);
+    const domainOk = await domainAcceptsMail(domain);
+    emailInput.disabled = false;
+    emailNextBtn.disabled = false;
+    if(!domainOk){
+      setNote('That email address doesn\u2019t look valid — please check for typos.', false);
+      return;
+    }
+    setNote('');
+    await goToPasswordStep(value);
+  });
+  emailInput.addEventListener('keydown', (e) => { if(e.key === 'Enter' && !emailNextBtn.disabled){ e.preventDefault(); emailNextBtn.click(); } });
+
+  useDifferentEmail.addEventListener('click', () => {
+    passwordStep.style.display = 'none';
+    emailStep.style.display = 'block';
+    title.textContent = 'Sign In';
+    sub.textContent = 'Enter your email to sign in or create an account';
+    setNote('');
+    emailInput.focus();
+  });
+
+  passwordSubmit.addEventListener('click', async () => {
+    const pw = passwordInput.value;
+    if(!pw){ setNote('Please enter a password.', false); return; }
+
+    passwordSubmit.disabled = true;
+    const originalLabel = passwordSubmit.textContent;
+
+    if(mode === 'login'){
+      passwordSubmit.textContent = 'Signing In…';
+      const result = await CharmAuth.login(currentEmail, pw);
+      if(!result.ok){
+        passwordSubmit.disabled = false;
+        passwordSubmit.textContent = originalLabel;
+        setNote(result.error === 'wrong-password' ? 'Incorrect email or password.' : (result.error || 'Something went wrong.'), false);
+        return;
+      }
+      if(window.CharmStore && CharmStore.mergeGuestDataIntoAccount) await CharmStore.mergeGuestDataIntoAccount();
+      setNote('Signed in — redirecting to your account…', true);
+      setTimeout(() => { window.location.href = 'account.html'; }, 700);
+    } else {
+      const confirmPw = confirmInput.value;
+      if(pw.length < 6){ passwordSubmit.disabled = false; setNote('Password must be at least 6 characters.', false); return; }
+      if(pw !== confirmPw){ passwordSubmit.disabled = false; setNote('Passwords do not match.', false); return; }
+      passwordSubmit.textContent = 'Creating Account…';
+      const result = await CharmAuth.register(currentEmail, pw);
+      if(!result.ok){
+        passwordSubmit.disabled = false;
+        passwordSubmit.textContent = originalLabel;
+        setNote(result.error, false);
+        return;
+      }
+      if(window.CharmStore && CharmStore.mergeGuestDataIntoAccount) await CharmStore.mergeGuestDataIntoAccount();
+      setNote('Account created — redirecting…', true);
+      setTimeout(() => { window.location.href = 'account.html'; }, 700);
+    }
+  });
+})();
+</script>
+</body></html>

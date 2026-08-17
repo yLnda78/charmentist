@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Saved Creations — CHARMENTIST</title><link rel="stylesheet" href="assets/css/style.css"></head>
+<body data-page="wishlist.html">
+<div id="site-header" data-variant="light"></div>
+
+<section class="section-pad">
+  <div class="wrap" style="display:flex; justify-content:space-between; margin-bottom:24px; flex-wrap:wrap; gap:14px;">
+    <span class="small" id="wish-count-label">0 Items · Sort by Recently Added</span>
+    <a class="btn btn-dark" href="appointment.html">Book Appointment</a>
+  </div>
+  <div class="wrap grid-4" id="wish-grid"></div>
+  <div class="wrap" id="wish-empty" style="display:none;">
+    <div class="empty-state">
+      <h3>Your wishlist is empty</h3>
+      <p>Save the pieces you love while you browse and they'll appear here, ready whenever you want to revisit, compare, or make them yours.</p>
+      <a class="btn btn-dark" href="index.html#collections">Browse Collections</a>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad" style="padding-top:0;">
+  <div class="wrap grid-3">
+    <div><div class="eyebrow">Your Collection, Your Moment</div><p class="small">Our Client Advisors are here to help you choose the perfect piece.</p><a class="link-arrow" style="display:inline-block;margin-top:10px;" href="appointment.html">Book a Private Appointment →</a></div>
+    <div><div class="eyebrow">Private Viewing</div><p class="small">Discover your saved creations in an intimate setting.</p><a class="link-arrow" style="display:inline-block;margin-top:10px;" href="boutiques.html">Find a Boutique →</a></div>
+    <div><div class="eyebrow">Maison Services</div><p class="small">From bespoke creations to lifetime care, we are with you at every step.</p><a class="link-arrow" style="display:inline-block;margin-top:10px;" href="services.html">Explore Services →</a></div>
+  </div>
+</section>
+
+<div id="site-footer"></div>
+<script src="assets/js/products.js"></script>
+<script src="assets/js/auth.js"></script>
+<script src="assets/js/store.js"></script>
+<script src="assets/js/main.js"></script>
+<script>
+function renderWishlist(){
+  const ids = CharmStore.getWishlist();
+  const items = ids.map(id => CharmData.byId(id)).filter(Boolean);
+  const grid = document.getElementById('wish-grid');
+  const empty = document.getElementById('wish-empty');
+  const label = document.getElementById('wish-count-label');
+
+  label.textContent = items.length + (items.length === 1 ? ' Item' : ' Items') + ' · Sort by Recently Added';
+
+  if(items.length === 0){
+    grid.style.display = 'none';
+    empty.style.display = 'block';
+    return;
+  }
+  grid.style.display = 'grid';
+  empty.style.display = 'none';
+
+  grid.innerHTML = items.map(p => {
+    const col = CharmData.collection(p.collection);
+    return `
+    <div class="tile" data-product-id="${p.id}">
+      <a class="tile-link-wrap" href="product.html?id=${p.id}">
+        <div class="tile-img"><img src="${p.img}"></div>
+        <p class="small">${col ? col.name.toUpperCase() : ''} COLLECTION</p>
+        <h4>${p.name}</h4>
+        <p class="small">${p.material}</p>
+        <p class="price">${CharmData.formatPrice(p.price)}</p>
+        <p class="small tile-meta">${CharmData.tileMeta(p)}</p>
+      </a>
+      <div class="tile-actions">
+        <button class="btn btn-outline btn-sm" data-action="add-to-cart">Add to Bag</button>
+        <button class="remove-link" data-remove-wishlist="${p.id}">Remove</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderWishlist();
+  document.addEventListener('charm:store-synced', renderWishlist);
+  document.addEventListener('charm:products-synced', renderWishlist);
+  document.getElementById('wish-grid').addEventListener('click', (e) => {
+    const removeBtn = e.target.closest('[data-remove-wishlist]');
+    if(removeBtn){
+      CharmStore.removeFromWishlist(removeBtn.dataset.removeWishlist);
+      renderWishlist();
+    }
+  });
+});
+</script>
+</body></html>

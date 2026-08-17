@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Request a Custom Piece — CHARMENTIST</title><link rel="stylesheet" href="assets/css/style.css">
+<style>
+  .req-layout{display:grid; grid-template-columns:1.6fr 1fr; gap:50px;}
+  @media(max-width:800px){.req-layout{grid-template-columns:1fr;}}
+  #preview{line-height:1.9; min-height:150px;}
+  .summary-panel{position:sticky; top:110px;}
+  @media(max-width:800px){.summary-panel{position:static;}}
+</style>
+</head>
+<body data-page="appointment.html">
+<div id="site-header" data-variant="light"></div>
+
+<section class="hero" style="min-height:32vh; background:none; color:var(--text); align-items:center;">
+  <div class="hero-inner" style="color:var(--text);">
+    <div class="hero-left">
+      <div><div class="hero-num" style="opacity:.5;"></div><h1 class="hero-title" style="font-size:clamp(2rem,4.2vw,3.1rem);">REQUEST A CUSTOM PIECE</h1>
+        <p class="hero-sub" style="color:var(--muted); margin-top:14px; max-width:480px;">Love a design from our collections but want it in a different stone, metal, or size? Tell us what you have in mind and we'll walk you through it directly, one message at a time.</p>
+        <a class="btn btn-dark mt-40" href="#request">Start Your Request →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad" style="padding-top:0;">
+  <div class="eyebrow">How It Works</div>
+  <div class="wrap idx-grid" style="grid-template-columns:repeat(4,1fr);">
+    <div class="idx-card"><span class="idx-num">01</span><h4>Send Your Idea</h4><p>Tell us the piece you love and what you'd like changed — stone, metal, or size.</p></div>
+    <div class="idx-card"><span class="idx-num">02</span><h4>We Talk It Through</h4><p>We reply on WhatsApp to work out the details, pricing, and timeline together.</p></div>
+    <div class="idx-card"><span class="idx-num">03</span><h4>You Confirm</h4><p>Once you're happy with the design and price, we lock it in and get to work.</p></div>
+    <div class="idx-card"><span class="idx-num">04</span><h4>Handcrafted &amp; Delivered</h4><p>Your piece is made to order by hand and shipped straight to you.</p></div>
+  </div>
+</section>
+
+<div class="steps small">
+  <div class="step active"><span class="dot">1</span>Your Info</div>
+  <div class="step"><span class="dot">2</span>Your Idea</div>
+  <div class="step"><span class="dot">3</span>Review &amp; Send</div>
+</div>
+
+<section class="section-pad" id="request" style="padding-top:40px;">
+  <div class="req-layout">
+    <div>
+      <form id="custom-form">
+        <div class="eyebrow">1. Your Contact Information</div>
+        <div class="field-row">
+          <div class="field"><label>First Name</label><input id="f-first"></div>
+          <div class="field"><label>Last Name</label><input id="f-last"></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>WhatsApp Number</label><input id="f-phone" placeholder="+62..."></div>
+          <div class="field"><label>Email Address (optional)</label><input id="f-email"></div>
+        </div>
+
+        <div class="eyebrow mt-40">2. Your Design Idea</div>
+        <div class="field"><label>Design You Have In Mind</label><input id="f-piece" placeholder="e.g. Vane Ring from Axis Language"></div>
+        <div class="field"><label>What Would You Like Changed</label><textarea id="f-change" rows="5" placeholder="e.g. same design but with ruby instead of sapphire, resized to US 6"></textarea></div>
+        <div class="field"><label>Budget Range (optional)</label><input id="f-budget" placeholder="e.g. around $10,000"></div>
+      </form>
+    </div>
+
+    <div class="summary-panel">
+      <div class="eyebrow">3. Review &amp; Send</div>
+      <div class="panel small" id="preview">Fill in the details on the left — we'll put together your message here.</div>
+      <a class="btn btn-dark mt-40" style="width:100%; justify-content:center;" id="wa-send" href="https://wa.me/6281234567890" target="_blank" rel="noopener">Continue on WhatsApp →</a>
+      <p class="small" style="margin-top:14px;">Prefer email or Instagram instead? <a class="link-arrow" href="contact.html">See all ways to reach us →</a></p>
+    </div>
+  </div>
+</section>
+
+<section class="dark-band section-pad text-center">
+  <h2 class="section-title">Made To Order, Made For You</h2>
+  <div class="wrap grid-4 mt-40 small">
+    <div><strong style="color:var(--white);">Handcrafted To Order</strong><br>No stock, no inventory — every piece is made after you say yes.</div>
+    <div><strong style="color:var(--white);">Direct With The Studio</strong><br>You talk to us, not a sales floor.</div>
+    <div><strong style="color:var(--white);">Fully Customizable</strong><br>Change the stone, metal, or size to fit you.</div>
+    <div><strong style="color:var(--white);">No Middleman, No Markup</strong><br>Priced honestly, straight from the source.</div>
+  </div>
+</section>
+
+<div id="site-footer"></div>
+<script src="assets/js/products.js"></script>
+<script src="assets/js/auth.js"></script>
+<script src="assets/js/store.js"></script>
+<script src="assets/js/main.js"></script>
+<script>
+(function(){
+  // WhatsApp number placeholder — replace with your real business number (country code, no +, no spaces).
+  const WA_NUMBER = '6281234567890';
+
+  const ids = ['f-first','f-last','f-phone','f-email','f-piece','f-change','f-budget'];
+  const preview = document.getElementById('preview');
+  const waLink = document.getElementById('wa-send');
+
+  function buildMessage(){
+    const v = id => (document.getElementById(id).value || '').trim();
+    const name = [v('f-first'), v('f-last')].filter(Boolean).join(' ');
+    const lines = [];
+    lines.push('Hi CHARMENTIST, I\'d like to request a custom piece.');
+    if(name) lines.push('Name: ' + name);
+    if(v('f-phone')) lines.push('WhatsApp: ' + v('f-phone'));
+    if(v('f-email')) lines.push('Email: ' + v('f-email'));
+    if(v('f-piece')) lines.push('Design reference: ' + v('f-piece'));
+    if(v('f-change')) lines.push('What I\'d like changed: ' + v('f-change'));
+    if(v('f-budget')) lines.push('Budget range: ' + v('f-budget'));
+    return lines.join('\n');
+  }
+
+  function update(){
+    const msg = buildMessage();
+    preview.textContent = msg;
+    waLink.href = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg);
+  }
+
+  ids.forEach(id => {
+    document.getElementById(id).addEventListener('input', update);
+  });
+  update();
+})();
+</script>
+</body></html>

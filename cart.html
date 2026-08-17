@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shopping Bag — CHARMENTIST</title><link rel="stylesheet" href="assets/css/style.css"></head>
+<body data-page="cart.html">
+<div id="site-header" data-variant="light"></div>
+
+<section class="section-pad" id="cart-filled" style="display:grid; grid-template-columns:1.8fr 1fr; gap:50px;">
+  <div>
+    <div class="eyebrow" style="display:flex; justify-content:space-between;"><span id="cart-count-label">0 Items</span></div>
+    <div id="cart-items"></div>
+
+    <div class="grid-4 mt-60 text-center small">
+      <div>Complimentary Gift Wrapping</div><div>Lifetime Care Promise</div><div>Worldwide Delivery</div><div>Authenticity Guarantee</div>
+    </div>
+
+    <div class="eyebrow mt-60">You May Also Love</div>
+    <div class="grid-4" id="cart-suggestions"></div>
+  </div>
+
+  <aside>
+    <div class="eyebrow">Order Summary</div>
+    <div class="panel">
+      <div class="small" style="display:flex; justify-content:space-between;"><span>Subtotal</span><span id="cart-subtotal">$0</span></div>
+      <div class="small" style="display:flex; justify-content:space-between; margin-top:8px;"><span>Shipping</span><span>Complimentary</span></div>
+      <div class="small" style="display:flex; justify-content:space-between; margin-top:8px;"><span>Taxes</span><span>Calculated at checkout</span></div>
+      <div class="small mt-40" style="display:flex; justify-content:space-between;"><span>Estimated Delivery</span><span>7–10 Business Days</span></div>
+      <a class="btn btn-dark mt-40" style="width:100%; justify-content:center;" href="checkout.html">Proceed to Checkout →</a>
+      <a class="btn btn-outline mt-40" style="width:100%; justify-content:center;" href="index.html">Continue Shopping</a>
+    </div>
+  </aside>
+</section>
+
+<section class="section-pad wrap" id="cart-empty" style="display:none;">
+  <div class="empty-state">
+    <h3>Your bag is empty</h3>
+    <p>Pieces you add from any collection will appear here, ready for checkout whenever you are.</p>
+    <a class="btn btn-dark" href="index.html#collections">Browse Collections</a>
+  </div>
+</section>
+
+<div id="site-footer"></div>
+<script src="assets/js/products.js"></script>
+<script src="assets/js/auth.js"></script>
+<script src="assets/js/store.js"></script>
+<script src="assets/js/main.js"></script>
+<script>
+function renderCart(){
+  const cart = CharmStore.getCart();
+  const filledSection = document.getElementById('cart-filled');
+  const emptySection = document.getElementById('cart-empty');
+  const itemsWrap = document.getElementById('cart-items');
+  const countLabel = document.getElementById('cart-count-label');
+  const subtotalEl = document.getElementById('cart-subtotal');
+
+  if(cart.length === 0){
+    filledSection.style.display = 'none';
+    emptySection.style.display = 'block';
+    return;
+  }
+  filledSection.style.display = 'grid';
+  emptySection.style.display = 'none';
+
+  const items = cart.map(ci => ({ ...ci, product: CharmData.byId(ci.id) })).filter(x => x.product);
+  const totalQty = items.reduce((s, x) => s + x.qty, 0);
+  countLabel.textContent = totalQty + (totalQty === 1 ? ' Item' : ' Items');
+
+  itemsWrap.innerHTML = items.map(({product: p, qty, size}) => {
+    const col = CharmData.collection(p.collection);
+    return `
+    <div class="cart-item" data-product-id="${p.id}" data-size="${size || ''}">
+      <img src="${p.img}">
+      <div style="flex:1;">
+        <p class="small">${col ? col.name.toUpperCase() : ''} COLLECTION</p>
+        <h4 class="serif">${p.name}</h4>
+        <p class="small">${p.material}</p>
+        ${size ? `<p class="small">Ring Size: ${size}</p>` : ''}
+        <p class="small" style="color:var(--muted); margin-top:4px;">Made to order · Ships in 7–8 weeks</p>
+        <div class="qty-stepper">
+          <button data-qty-minus>−</button>
+          <span>${qty}</span>
+          <button data-qty-plus>+</button>
+        </div>
+        <button class="remove-link" data-remove-cart>Remove</button>
+      </div>
+      <strong>${CharmData.formatPrice(p.price * qty)}</strong>
+    </div>`;
+  }).join('');
+
+  subtotalEl.textContent = CharmData.formatPrice(CharmStore.cartSubtotal());
+
+  // Suggestions: pull a few pieces not currently in the bag
+  const inCartIds = items.map(x => x.product.id);
+  const suggestions = CharmData.all().filter(p => !inCartIds.includes(p.id)).slice(0, 4);
+  document.getElementById('cart-suggestions').innerHTML = suggestions.map(p => `
+    <div class="tile" data-product-id="${p.id}">
+      <a class="tile-link-wrap" href="product.html?id=${p.id}">
+        <div class="tile-img"><img src="${p.img}"></div>
+        <h4>${p.name}</h4>
+        <p class="price">${CharmData.formatPrice(p.price)}</p>
+      </a>
+      <div class="tile-actions">
+        <button class="icon-btn" data-action="wishlist" aria-label="Save to wishlist"><svg viewBox="0 0 24 24"><path d="M12 20.2s-8-4.9-8-11.1A4.9 4.9 0 0 1 12 6.4 4.9 4.9 0 0 1 20 9.1c0 6.2-8 11.1-8 11.1Z"/></svg></button>
+        <button class="btn btn-outline btn-sm" data-action="add-to-cart">Add to Bag</button>
+      </div>
+    </div>
+  `).join('');
+
+  if(typeof CharmStore !== 'undefined') CharmStore.refreshButtonStates();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderCart();
+  document.addEventListener('charm:store-synced', renderCart);
+  document.addEventListener('charm:products-synced', renderCart); // prices/stock may have changed
+  document.getElementById('cart-items').addEventListener('click', (e) => {
+    const row = e.target.closest('[data-product-id]');
+    if(!row) return;
+    const id = row.dataset.productId;
+    const size = row.dataset.size || null;
+    const current = CharmStore.getCart().find(x => x.id === id && (x.size || null) === size);
+    if(e.target.closest('[data-qty-plus]')){
+      CharmStore.setCartQty(id, (current ? current.qty : 1) + 1, size);
+      renderCart();
+    } else if(e.target.closest('[data-qty-minus]')){
+      const next = (current ? current.qty : 1) - 1;
+      if(next <= 0){ CharmStore.removeFromCart(id, size); } else { CharmStore.setCartQty(id, next, size); }
+      renderCart();
+    } else if(e.target.closest('[data-remove-cart]')){
+      CharmStore.removeFromCart(id, size);
+      renderCart();
+    }
+  });
+  document.getElementById('cart-suggestions').addEventListener('click', () => {
+    // small delay so store.js's own handler runs first, then refresh totals
+    setTimeout(renderCart, 50);
+  });
+});
+</script>
+</body></html>

@@ -1,0 +1,548 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My Account — CHARMENTIST</title><link rel="stylesheet" href="assets/css/style.css"></head>
+<body data-page="account.html">
+<div id="site-header" data-variant="dark"></div>
+
+<section class="section-pad account-layout">
+  <aside class="small account-nav" id="account-nav">
+    <div class="account-nav-title">Overview</div>
+    <a data-tab="overview">Overview</a>
+    <a data-tab="orders">Orders</a>
+    <a data-tab="wishlist">Wishlist</a>
+    <a data-tab="appointments">Appointments</a>
+    <a data-tab="bespoke">Bespoke Projects</a>
+    <a data-tab="addresses">Addresses</a>
+    <a data-tab="payment">Payment Methods</a>
+    <a data-tab="gifts">Gift History</a>
+    <a data-tab="registration">Jewelry Registration</a>
+    <a data-tab="care">Care Services</a>
+    <a data-tab="repairs">Repair Tracking</a>
+    <a data-tab="certificates">Certificates</a>
+    <a data-tab="newsletter">Newsletter Preference</a>
+    <a data-tab="settings">Account Settings</a>
+    <a class="logout-link" id="logout-link">Logout</a>
+  </aside>
+
+  <div>
+    <!-- OVERVIEW -->
+    <div class="account-panel" data-panel="overview">
+      <div class="grid-2">
+        <div class="panel">
+          <p class="small" id="account-name">—</p>
+          <h3 class="serif" id="account-tier">Member</h3>
+          <p class="small" id="account-since">—</p>
+          <a class="link-arrow" style="display:inline-block;margin-top:10px;cursor:pointer;" data-goto="settings">Edit Profile →</a>
+        </div>
+        <div class="panel">
+          <div class="eyebrow">Membership Status</div>
+          <h3 class="serif" id="account-tier-2">Member</h3>
+          <p class="small">Enjoy exclusive services, early access, and private invitations.</p>
+          <a class="link-arrow" style="display:inline-block;margin-top:10px;cursor:pointer;" data-goto="benefits">View Benefits →</a>
+        </div>
+      </div>
+
+      <div class="eyebrow mt-60">At a Glance</div>
+      <div class="grid-4">
+        <div class="panel text-center"><h2 class="serif" id="stat-orders">0</h2><p class="small">Orders</p></div>
+        <div class="panel text-center"><h2 class="serif" id="stat-wishlist">0</h2><p class="small">Wishlist Items</p></div>
+        <div class="panel text-center"><h2 class="serif" id="stat-appointments">0</h2><p class="small">Upcoming Appointments</p></div>
+        <div class="panel text-center"><h2 class="serif" id="stat-bespoke">0</h2><p class="small">Bespoke Project</p></div>
+      </div>
+
+      <div class="eyebrow mt-60">Recent Orders</div>
+      <div class="panel" id="recent-orders"></div>
+    </div>
+
+    <!-- BENEFITS (opened from "View Benefits") -->
+    <div class="account-panel" data-panel="benefits">
+      <div class="eyebrow">Membership Status</div>
+      <h2 class="section-title">Member Benefits</h2>
+      <p class="body-text">As a CHARMENTIST member, you have access to the following, at no extra cost.</p>
+      <ul class="benefit-list">
+        <li><strong>Priority Appointments</strong>First access to book private viewings and consultations with our studio.</li>
+        <li><strong>Complimentary Care</strong>Two complimentary cleaning &amp; inspection services per year on any CHARMENTIST piece.</li>
+        <li><strong>Early Access</strong>See new collections and limited pieces before they're released publicly.</li>
+        <li><strong>Private Invitations</strong>Invitations to studio events, trunk shows, and collection previews.</li>
+        <li><strong>Dedicated Concierge</strong>A direct line to our Client Services team for bespoke requests and support.</li>
+      </ul>
+      <a class="link-arrow" style="display:inline-block;margin-top:24px;cursor:pointer;" data-goto="overview">← Back to Overview</a>
+    </div>
+
+    <!-- ORDERS -->
+    <div class="account-panel" data-panel="orders">
+      <div class="eyebrow">Orders</div>
+      <h2 class="section-title">Your Orders</h2>
+      <div class="panel" id="orders-full-list"></div>
+    </div>
+
+    <!-- WISHLIST -->
+    <div class="account-panel" data-panel="wishlist">
+      <div class="eyebrow">Wishlist</div>
+      <h2 class="section-title">Your Wishlist</h2>
+      <div id="wishlist-full-list"></div>
+    </div>
+
+    <!-- APPOINTMENTS -->
+    <div class="account-panel" data-panel="appointments">
+      <div class="eyebrow">Appointments</div>
+      <h2 class="section-title">Appointments</h2>
+      <div class="panel empty-state">
+        <p class="serif" style="font-size:1.15rem;">You have no upcoming appointments</p>
+        <p class="small" style="color:var(--muted);">Appointments are arranged directly with our studio over WhatsApp.</p>
+        <a class="btn btn-dark mt-40" href="appointment.html">Request an Appointment →</a>
+      </div>
+    </div>
+
+    <!-- BESPOKE PROJECTS -->
+    <div class="account-panel" data-panel="bespoke">
+      <div class="eyebrow">Bespoke Projects</div>
+      <h2 class="section-title">Bespoke Projects</h2>
+      <div class="panel empty-state">
+        <p class="serif" style="font-size:1.15rem;">You have no bespoke projects yet</p>
+        <p class="small" style="color:var(--muted);">Start a custom design conversation with our studio.</p>
+        <a class="btn btn-dark mt-40" href="appointment.html">Start a Bespoke Request →</a>
+      </div>
+    </div>
+
+    <!-- ADDRESSES -->
+    <div class="account-panel" data-panel="addresses">
+      <div class="eyebrow">Addresses</div>
+      <h2 class="section-title">Saved Addresses</h2>
+      <div id="addresses-list"></div>
+      <button type="button" class="btn btn-outline mt-40" id="show-address-form">+ Add Address</button>
+      <form id="address-form" class="inline-form" style="display:none;">
+        <div class="field-row">
+          <div class="field"><label>Label</label><input id="addr-label" placeholder="e.g. Home, Office"></div>
+          <div class="field"><label>Full Name</label><input id="addr-name"></div>
+        </div>
+        <div class="field"><label>Address Line 1</label><input id="addr-line1"></div>
+        <div class="field"><label>Address Line 2 (optional)</label><input id="addr-line2"></div>
+        <div class="field-row">
+          <div class="field"><label>City</label><input id="addr-city"></div>
+          <div class="field"><label>Postal Code</label><input id="addr-postal"></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>Country</label><input id="addr-country"></div>
+          <div class="field"><label>Phone</label><input id="addr-phone"></div>
+        </div>
+        <p class="save-note" id="address-note"></p>
+        <button type="button" class="btn btn-dark" id="save-address">Save Address</button>
+        <button type="button" class="btn btn-outline" id="cancel-address" style="margin-left:10px;">Cancel</button>
+      </form>
+    </div>
+
+    <!-- PAYMENT METHODS -->
+    <div class="account-panel" data-panel="payment">
+      <div class="eyebrow">Payment Methods</div>
+      <h2 class="section-title">Saved Payment Methods</h2>
+      <p class="small" style="color:var(--muted); margin-bottom:20px;">For your security, we only ever store a nickname and the last 4 digits — never a full card number.</p>
+      <div id="payment-list"></div>
+      <button type="button" class="btn btn-outline mt-40" id="show-payment-form">+ Add Payment Method</button>
+      <form id="payment-form" class="inline-form" style="display:none;">
+        <div class="field"><label>Nickname</label><input id="pay-nickname" placeholder="e.g. Personal Visa"></div>
+        <div class="field-row">
+          <div class="field"><label>Last 4 Digits</label><input id="pay-last4" maxlength="4" placeholder="1234"></div>
+          <div class="field"><label>Expiry (MM/YY)</label><input id="pay-expiry" maxlength="5" placeholder="08/29"></div>
+        </div>
+        <p class="save-note" id="payment-note"></p>
+        <button type="button" class="btn btn-dark" id="save-payment">Save Payment Method</button>
+        <button type="button" class="btn btn-outline" id="cancel-payment" style="margin-left:10px;">Cancel</button>
+      </form>
+    </div>
+
+    <!-- GIFT HISTORY -->
+    <div class="account-panel" data-panel="gifts">
+      <div class="eyebrow">Gift History</div>
+      <h2 class="section-title">Gift History</h2>
+      <div class="panel empty-state">
+        <p class="serif" style="font-size:1.15rem;">No gift orders yet</p>
+        <p class="small" style="color:var(--muted);">Pieces you send as gifts will show up here.</p>
+      </div>
+    </div>
+
+    <!-- JEWELRY REGISTRATION -->
+    <div class="account-panel" data-panel="registration">
+      <div class="eyebrow">Jewelry Registration</div>
+      <h2 class="section-title">Registered Pieces</h2>
+      <div class="panel empty-state">
+        <p class="serif" style="font-size:1.15rem;">You have no registered pieces</p>
+        <p class="small" style="color:var(--muted);">Registering a piece links it to your account for insurance and warranty purposes. Contact our concierge to register a CHARMENTIST piece.</p>
+        <a class="btn btn-dark mt-40" href="contact.html">Register a Piece →</a>
+      </div>
+    </div>
+
+    <!-- CARE SERVICES -->
+    <div class="account-panel" data-panel="care">
+      <div class="eyebrow">Care Services</div>
+      <h2 class="section-title">Care Services</h2>
+      <div class="panel empty-state">
+        <p class="serif" style="font-size:1.15rem;">No care service requests yet</p>
+        <p class="small" style="color:var(--muted);">Learn how we clean, store, and maintain your pieces.</p>
+        <a class="btn btn-dark mt-40" href="care-aftercare.html">View Care Guide →</a>
+      </div>
+    </div>
+
+    <!-- REPAIR TRACKING -->
+    <div class="account-panel" data-panel="repairs">
+      <div class="eyebrow">Repair Tracking</div>
+      <h2 class="section-title">Repair Tracking</h2>
+      <div class="panel empty-state">
+        <p class="serif" style="font-size:1.15rem;">You have no repairs in progress</p>
+        <p class="small" style="color:var(--muted);">Send a repair request to our Client Services team.</p>
+        <a class="btn btn-dark mt-40" href="client-services.html">Request a Repair →</a>
+      </div>
+    </div>
+
+    <!-- CERTIFICATES -->
+    <div class="account-panel" data-panel="certificates">
+      <div class="eyebrow">Certificates</div>
+      <h2 class="section-title">Certificates</h2>
+      <div class="panel empty-state">
+        <p class="serif" style="font-size:1.15rem;">No certificates on file</p>
+        <p class="small" style="color:var(--muted);">Gemstone and authenticity certificates for your pieces will appear here once issued.</p>
+        <a class="btn btn-dark mt-40" href="authenticity.html">About Our Certificates →</a>
+      </div>
+    </div>
+
+    <!-- NEWSLETTER PREFERENCE -->
+    <div class="account-panel" data-panel="newsletter">
+      <div class="eyebrow">Newsletter Preference</div>
+      <h2 class="section-title">Email Preferences</h2>
+      <div class="panel">
+        <div class="toggle-row">
+          <div>
+            <p style="font-size:.9rem;">News &amp; Offers</p>
+            <p class="small" style="color:var(--muted); margin-top:4px;">Receive news about new collections and private invitations.</p>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="newsletter-toggle">
+            <span class="track"></span><span class="thumb"></span>
+          </label>
+        </div>
+      </div>
+      <p class="save-note is-success" id="newsletter-note" style="margin-top:14px;"></p>
+    </div>
+
+    <!-- ACCOUNT SETTINGS -->
+    <div class="account-panel" data-panel="settings">
+      <div class="eyebrow">Account Settings</div>
+      <h2 class="section-title">Account Settings</h2>
+
+      <div class="panel">
+        <div class="eyebrow">Profile</div>
+        <div class="field mt-40"><label>Email</label><input id="settings-email" disabled></div>
+        <div class="field"><label>Display Name</label><input id="settings-name"></div>
+        <p class="save-note" id="profile-note"></p>
+        <button type="button" class="btn btn-dark" id="save-profile">Save Changes</button>
+      </div>
+
+      <div class="panel mt-40">
+        <div class="eyebrow">Change Password</div>
+        <div class="field mt-40"><label>Current Password</label><input type="password" id="pw-current"></div>
+        <div class="field-row">
+          <div class="field"><label>New Password</label><input type="password" id="pw-new"></div>
+          <div class="field"><label>Confirm New Password</label><input type="password" id="pw-confirm"></div>
+        </div>
+        <p class="save-note" id="password-note"></p>
+        <button type="button" class="btn btn-dark" id="save-password">Update Password</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="section-pad">
+  <div class="eyebrow">Private Services</div>
+  <h2 class="section-title">Experience Beyond Ownership</h2>
+  <p class="body-text">From bespoke creations to lifetime care, our Private Client Services are designed for you.</p>
+  <a class="link-arrow" style="display:inline-block;margin-top:16px;" href="client-services.html">Explore Services →</a>
+</section>
+
+<div id="site-footer"></div>
+<script src="assets/js/products.js"></script>
+<script src="assets/js/auth.js"></script>
+<script src="assets/js/store.js"></script>
+<script src="assets/js/main.js"></script>
+<script>
+(function () {
+  if (typeof CharmAuth === 'undefined' || !CharmAuth.isLoggedIn()) {
+    window.location.href = 'signin.html';
+    return;
+  }
+  var user = CharmAuth.currentUser();
+  var TABS = ['overview','benefits','orders','wishlist','appointments','bespoke','addresses','payment','gifts','registration','care','repairs','certificates','newsletter','settings'];
+
+  // ---------------- Tab / panel switching ----------------
+  function showTab(name){
+    if(TABS.indexOf(name) === -1) name = 'overview';
+    document.querySelectorAll('.account-panel').forEach(function(p){
+      p.classList.toggle('is-active', p.dataset.panel === name);
+    });
+    document.querySelectorAll('.account-nav a[data-tab]').forEach(function(a){
+      a.classList.toggle('is-active', a.dataset.tab === name);
+    });
+    window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
+  }
+  document.querySelectorAll('.account-nav a[data-tab]').forEach(function(a){
+    a.addEventListener('click', function(){ showTab(a.dataset.tab); history.replaceState(null,'','#'+a.dataset.tab); });
+  });
+  document.querySelectorAll('[data-goto]').forEach(function(a){
+    a.addEventListener('click', function(){ showTab(a.dataset.goto); history.replaceState(null,'','#'+a.dataset.goto); });
+  });
+  showTab((window.location.hash || '#overview').replace('#',''));
+
+  // ---------------- Overview / Orders ----------------
+  // Orders now live on the server (tied to the account, same as cart/
+  // wishlist) instead of localStorage — so they follow you across
+  // devices and can't be edited from devtools. Rendered async: the stat
+  // numbers and lists start empty and fill in once the API responds.
+  var memberSince = '';
+  if (user.createdAt) {
+    memberSince = new Date(user.createdAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+  }
+  var wishlistIds = (typeof CharmStore !== 'undefined') ? CharmStore.getWishlist() : [];
+
+  document.getElementById('account-name').textContent = user.name || user.email;
+  document.getElementById('account-tier').textContent = 'Member';
+  document.getElementById('account-tier-2').textContent = 'Member';
+  document.getElementById('account-since').textContent = memberSince ? 'Member since ' + memberSince : '';
+  document.getElementById('stat-wishlist').textContent = wishlistIds.length;
+  document.getElementById('stat-appointments').textContent = 0;
+  document.getElementById('stat-bespoke').textContent = 0;
+
+  var STATUS_LABELS = {
+    pending: 'Pending Payment', paid: 'Paid', processing: 'In Production',
+    shipped: 'Shipped', completed: 'Completed', cancelled: 'Cancelled'
+  };
+
+  function orderRow(o, isLast){
+    var borderStyle = isLast ? '' : 'border-bottom:1px solid var(--line);';
+    var itemLabel = (o.items && o.items[0]) ? o.items[0].name + (o.items.length > 1 ? ' + ' + (o.items.length - 1) + ' more' : '') : '';
+    var date = o.created_at ? new Date(o.created_at.replace(' ', 'T') + 'Z').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '';
+    var statusLabel = STATUS_LABELS[o.status] || o.status;
+    return '<div style="display:flex; justify-content:space-between; padding:10px 0; font-size:.82rem; ' + borderStyle + '">' +
+      '<span>#' + o.order_number + ' — ' + itemLabel + '</span>' +
+      '<span style="display:flex; gap:14px; align-items:center;"><span class="small" style="color:var(--muted);">' + statusLabel + '</span><span>' + date + '</span></span></div>';
+  }
+
+  var recentEl = document.getElementById('recent-orders');
+  var ordersFullEl = document.getElementById('orders-full-list');
+  var statOrdersEl = document.getElementById('stat-orders');
+  var emptyHtml = '<p class="small" style="padding:20px 0; text-align:center;">You have no orders yet. <a class="link-arrow" href="index.html#collections">Start browsing →</a></p>';
+  var emptyFullHtml = '<div class="empty-state"><p class="serif" style="font-size:1.15rem;">You have no orders yet</p><p class="small" style="color:var(--muted);">Pieces you order will show up here.</p><a class="btn btn-dark mt-40" href="index.html#collections">Start Browsing →</a></div>';
+
+  async function loadOrders(){
+    try{
+      var data = await CharmAuth.apiFetch('/orders');
+      var orders = (data && data.orders) || [];
+      statOrdersEl.textContent = orders.length;
+      recentEl.innerHTML = orders.length === 0 ? emptyHtml : orders.slice(0,5).map(function(o,i){ return orderRow(o, i === Math.min(orders.length,5)-1); }).join('');
+      ordersFullEl.innerHTML = orders.length === 0 ? emptyFullHtml : orders.map(function(o,i){ return orderRow(o, i === orders.length-1); }).join('');
+    }catch(e){
+      recentEl.innerHTML = '<p class="small" style="padding:20px 0; text-align:center; color:var(--muted);">Could not load your orders right now.</p>';
+      ordersFullEl.innerHTML = recentEl.innerHTML;
+    }
+  }
+  loadOrders();
+
+  // ---------------- Wishlist (full) ----------------
+  var wishlistEl = document.getElementById('wishlist-full-list');
+  function renderWishlist(){
+    var ids = CharmStore.getWishlist();
+    if(ids.length === 0){
+      wishlistEl.innerHTML = '<div class="panel empty-state"><p class="serif" style="font-size:1.15rem;">Your wishlist is empty</p><p class="small" style="color:var(--muted);">Save pieces you love to find them here later.</p><a class="btn btn-dark mt-40" href="index.html#collections">Explore Collections →</a></div>';
+      return;
+    }
+    var grid = document.createElement('div');
+    grid.className = 'grid-4';
+    ids.forEach(function(id){
+      var p = (typeof CharmData !== 'undefined') ? CharmData.byId(id) : null;
+      if(!p) return;
+      var tile = document.createElement('div');
+      tile.className = 'tile';
+      tile.innerHTML = '<a href="product.html?id=' + encodeURIComponent(p.id) + '"><div class="tile-img"><img src="' + p.img + '" alt="' + p.name + '"></div>' +
+        '<h4>' + p.name + '</h4><p>' + p.material + '</p><p class="price">' + CharmData.formatPrice(p.price) + '</p></a>' +
+        '<button type="button" class="btn-copy mt-40" data-remove-id="' + p.id + '" style="cursor:pointer;">Remove from Wishlist</button>';
+      grid.appendChild(tile);
+    });
+    wishlistEl.innerHTML = '';
+    wishlistEl.appendChild(grid);
+    wishlistEl.querySelectorAll('[data-remove-id]').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        CharmStore.removeFromWishlist(btn.dataset.removeId);
+        renderWishlist();
+        document.getElementById('stat-wishlist').textContent = CharmStore.getWishlist().length;
+      });
+    });
+  }
+  renderWishlist();
+  document.addEventListener('charm:store-synced', function(){
+    renderWishlist();
+    document.getElementById('stat-wishlist').textContent = CharmStore.getWishlist().length;
+  });
+  document.addEventListener('charm:products-synced', renderWishlist);
+
+  // ---------------- Addresses (localStorage CRUD, keyed by email) ----------------
+  var ADDR_KEY = 'charm_addresses';
+  function readAddresses(){
+    try{ var all = JSON.parse(localStorage.getItem(ADDR_KEY) || '{}'); return all[user.email] || []; }catch(e){ return []; }
+  }
+  function writeAddresses(list){
+    var all = {};
+    try{ all = JSON.parse(localStorage.getItem(ADDR_KEY) || '{}'); }catch(e){}
+    all[user.email] = list;
+    localStorage.setItem(ADDR_KEY, JSON.stringify(all));
+  }
+  function renderAddresses(){
+    var list = readAddresses();
+    var el = document.getElementById('addresses-list');
+    if(list.length === 0){
+      el.innerHTML = '<div class="panel empty-state"><p class="serif" style="font-size:1.15rem;">No saved addresses</p><p class="small" style="color:var(--muted);">Add an address to speed up checkout next time.</p></div>';
+      return;
+    }
+    el.innerHTML = list.map(function(a){
+      return '<div class="mini-card"><div>' +
+        '<strong style="display:block; margin-bottom:4px;">' + (a.label || 'Address') + '</strong>' +
+        '<span class="small">' + [a.name, a.line1, a.line2, a.city, a.postal, a.country, a.phone].filter(Boolean).join(', ') + '</span>' +
+        '</div><div class="mini-card-actions"><button type="button" data-del-addr="' + a.id + '">Delete</button></div></div>';
+    }).join('');
+    el.querySelectorAll('[data-del-addr]').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        writeAddresses(readAddresses().filter(function(a){ return a.id !== btn.dataset.delAddr; }));
+        renderAddresses();
+      });
+    });
+  }
+  renderAddresses();
+
+  var addrForm = document.getElementById('address-form');
+  document.getElementById('show-address-form').addEventListener('click', function(){ addrForm.style.display = 'block'; });
+  document.getElementById('cancel-address').addEventListener('click', function(){ addrForm.style.display = 'none'; });
+  document.getElementById('save-address').addEventListener('click', function(){
+    var note = document.getElementById('address-note');
+    var line1 = document.getElementById('addr-line1').value.trim();
+    var city = document.getElementById('addr-city').value.trim();
+    if(!line1 || !city){ note.textContent = 'Please fill in at least address line 1 and city.'; note.className = 'save-note is-error'; return; }
+    var addr = {
+      id: 'addr_' + Date.now(),
+      label: document.getElementById('addr-label').value.trim(),
+      name: document.getElementById('addr-name').value.trim(),
+      line1: line1,
+      line2: document.getElementById('addr-line2').value.trim(),
+      city: city,
+      postal: document.getElementById('addr-postal').value.trim(),
+      country: document.getElementById('addr-country').value.trim(),
+      phone: document.getElementById('addr-phone').value.trim()
+    };
+    var list = readAddresses(); list.push(addr); writeAddresses(list);
+    ['addr-label','addr-name','addr-line1','addr-line2','addr-city','addr-postal','addr-country','addr-phone'].forEach(function(id){ document.getElementById(id).value = ''; });
+    note.textContent = ''; addrForm.style.display = 'none';
+    renderAddresses();
+  });
+
+  // ---------------- Payment Methods (localStorage, last-4 only) ----------------
+  var PAY_KEY = 'charm_payment_methods';
+  function readPayments(){
+    try{ var all = JSON.parse(localStorage.getItem(PAY_KEY) || '{}'); return all[user.email] || []; }catch(e){ return []; }
+  }
+  function writePayments(list){
+    var all = {};
+    try{ all = JSON.parse(localStorage.getItem(PAY_KEY) || '{}'); }catch(e){}
+    all[user.email] = list;
+    localStorage.setItem(PAY_KEY, JSON.stringify(all));
+  }
+  function renderPayments(){
+    var list = readPayments();
+    var el = document.getElementById('payment-list');
+    if(list.length === 0){
+      el.innerHTML = '<div class="panel empty-state"><p class="serif" style="font-size:1.15rem;">No saved payment methods</p><p class="small" style="color:var(--muted);">Add a card to speed up checkout next time.</p></div>';
+      return;
+    }
+    el.innerHTML = list.map(function(p){
+      return '<div class="mini-card"><div><strong style="display:block; margin-bottom:4px;">' + p.nickname + '</strong>' +
+        '<span class="small">Card ending in ' + p.last4 + ' · Expires ' + p.expiry + '</span></div>' +
+        '<div class="mini-card-actions"><button type="button" data-del-pay="' + p.id + '">Delete</button></div></div>';
+    }).join('');
+    el.querySelectorAll('[data-del-pay]').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        writePayments(readPayments().filter(function(p){ return p.id !== btn.dataset.delPay; }));
+        renderPayments();
+      });
+    });
+  }
+  renderPayments();
+
+  var payForm = document.getElementById('payment-form');
+  document.getElementById('show-payment-form').addEventListener('click', function(){ payForm.style.display = 'block'; });
+  document.getElementById('cancel-payment').addEventListener('click', function(){ payForm.style.display = 'none'; });
+  document.getElementById('save-payment').addEventListener('click', function(){
+    var note = document.getElementById('payment-note');
+    var nickname = document.getElementById('pay-nickname').value.trim();
+    var last4 = document.getElementById('pay-last4').value.trim();
+    var expiry = document.getElementById('pay-expiry').value.trim();
+    if(!nickname || !/^\d{4}$/.test(last4) || !/^\d{2}\/\d{2}$/.test(expiry)){
+      note.textContent = 'Please enter a nickname, exactly 4 digits, and expiry as MM/YY.';
+      note.className = 'save-note is-error';
+      return;
+    }
+    var list = readPayments();
+    list.push({ id: 'pay_' + Date.now(), nickname: nickname, last4: last4, expiry: expiry });
+    writePayments(list);
+    document.getElementById('pay-nickname').value = '';
+    document.getElementById('pay-last4').value = '';
+    document.getElementById('pay-expiry').value = '';
+    note.textContent = ''; payForm.style.display = 'none';
+    renderPayments();
+  });
+
+  // ---------------- Newsletter preference ----------------
+  var NEWS_KEY = 'charm_newsletter_pref';
+  function readNewsletterAll(){ try{ return JSON.parse(localStorage.getItem(NEWS_KEY) || '{}'); }catch(e){ return {}; } }
+  var newsToggle = document.getElementById('newsletter-toggle');
+  newsToggle.checked = !!readNewsletterAll()[user.email];
+  newsToggle.addEventListener('change', function(){
+    var all = readNewsletterAll();
+    all[user.email] = newsToggle.checked;
+    localStorage.setItem(NEWS_KEY, JSON.stringify(all));
+    var note = document.getElementById('newsletter-note');
+    note.textContent = 'Preference saved.';
+    setTimeout(function(){ note.textContent = ''; }, 2000);
+  });
+
+  // ---------------- Account settings ----------------
+  document.getElementById('settings-email').value = user.email;
+  document.getElementById('settings-name').value = user.name || '';
+  document.getElementById('save-profile').addEventListener('click', async function(){
+    var note = document.getElementById('profile-note');
+    var result = await CharmAuth.updateName(document.getElementById('settings-name').value);
+    if(!result.ok){ note.textContent = result.error || 'Could not save changes.'; note.className = 'save-note is-error'; return; }
+    note.textContent = 'Profile updated.'; note.className = 'save-note is-success';
+    document.getElementById('account-name').textContent = document.getElementById('settings-name').value.trim() || user.email;
+  });
+  document.getElementById('save-password').addEventListener('click', async function(){
+    var note = document.getElementById('password-note');
+    var cur = document.getElementById('pw-current').value;
+    var next = document.getElementById('pw-new').value;
+    var confirm = document.getElementById('pw-confirm').value;
+    if(next !== confirm){ note.textContent = 'New passwords do not match.'; note.className = 'save-note is-error'; return; }
+    var result = await CharmAuth.changePassword(cur, next);
+    if(!result.ok){
+      note.textContent = result.error === 'wrong-password' ? 'Current password is incorrect.' : (result.error || 'Could not update password.');
+      note.className = 'save-note is-error';
+      return;
+    }
+    note.textContent = 'Password updated.'; note.className = 'save-note is-success';
+    document.getElementById('pw-current').value = '';
+    document.getElementById('pw-new').value = '';
+    document.getElementById('pw-confirm').value = '';
+  });
+
+  document.getElementById('logout-link').addEventListener('click', function () {
+    CharmAuth.logout();
+    window.location.href = 'index.html';
+  });
+})();
+</script>
+</body></html>

@@ -1,0 +1,1356 @@
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Client Services — CHARMENTIST</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <style>
+    /* =========================================================
+       CLIENT SERVICES — LUXURY EDITION
+       ========================================================= */
+
+    .services-intro {
+      max-width: 680px;
+      margin-top: 18px;
+      color: var(--muted);
+      line-height: 1.9;
+    }
+
+
+    /* =========================================================
+       SERVICE GRID
+       ========================================================= */
+
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid rgba(0,0,0,.13);
+      border-left: 1px solid rgba(0,0,0,.13);
+      margin-top: 42px;
+    }
+
+
+    /* =========================================================
+       SERVICE CARD
+       ========================================================= */
+
+    .service-card {
+      min-height: 260px;
+      padding: 30px 28px 32px;
+      border-right: 1px solid rgba(0,0,0,.13);
+      border-bottom: 1px solid rgba(0,0,0,.13);
+
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      background:
+        linear-gradient(
+          135deg,
+          transparent 0%,
+          rgba(0,0,0,.018) 100%
+        );
+
+      overflow: hidden;
+
+      transition:
+        transform .45s cubic-bezier(.22,1,.36,1),
+        box-shadow .45s cubic-bezier(.22,1,.36,1),
+        background .45s ease;
+    }
+
+
+    /* Animated luxury underline */
+
+    .service-card::before {
+      content: "";
+      position: absolute;
+
+      left: 0;
+      bottom: 0;
+
+      width: 0;
+      height: 2px;
+
+      background: currentColor;
+
+      transition:
+        width .55s cubic-bezier(.22,1,.36,1);
+    }
+
+
+    /* Subtle inner light */
+
+    .service-card::after {
+      content: "";
+
+      position: absolute;
+
+      width: 180px;
+      height: 180px;
+
+      right: -110px;
+      bottom: -110px;
+
+      border: 1px solid rgba(0,0,0,.08);
+      border-radius: 50%;
+
+      transition:
+        transform .65s cubic-bezier(.22,1,.36,1),
+        opacity .5s ease;
+    }
+
+
+    .service-card:hover {
+      transform: translateY(-7px);
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(0,0,0,.015),
+          rgba(0,0,0,.045)
+        );
+
+      box-shadow:
+        0 18px 45px rgba(0,0,0,.08),
+        0 3px 10px rgba(0,0,0,.04);
+
+      z-index: 3;
+    }
+
+
+    .service-card:hover::before {
+      width: 100%;
+    }
+
+
+    .service-card:hover::after {
+      transform: scale(1.65);
+      opacity: .55;
+    }
+
+
+    /* =========================================================
+       NUMBER
+       ========================================================= */
+
+    .service-number {
+      font-family: var(--serif, Georgia, serif);
+      font-size: .72rem;
+      letter-spacing: .14em;
+      color: var(--muted);
+
+      transition:
+        transform .45s ease,
+        letter-spacing .45s ease;
+    }
+
+
+    .service-card:hover .service-number {
+      transform: translateX(4px);
+      letter-spacing: .22em;
+    }
+
+
+    /* =========================================================
+       SYMBOL
+       ========================================================= */
+
+    .service-symbol {
+      width: 38px;
+      height: 38px;
+
+      border: 1px solid rgba(0,0,0,.25);
+      border-radius: 50%;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-family: var(--serif, Georgia, serif);
+      font-size: .9rem;
+
+      margin: 22px 0 20px;
+
+      position: relative;
+      z-index: 2;
+
+      transition:
+        transform .55s cubic-bezier(.22,1,.36,1),
+        border-radius .55s ease,
+        letter-spacing .4s ease,
+        background .4s ease;
+    }
+
+
+    .service-symbol::after {
+      content: "";
+
+      position: absolute;
+      inset: 4px;
+
+      border: 1px solid transparent;
+      border-radius: inherit;
+
+      transition:
+        border-color .45s ease,
+        transform .55s ease;
+    }
+
+
+    .service-card:hover .service-symbol {
+      transform:
+        rotate(12deg)
+        scale(1.08);
+
+      border-radius: 35%;
+      background: rgba(0,0,0,.025);
+    }
+
+
+    .service-card:hover .service-symbol::after {
+      border-color: rgba(0,0,0,.14);
+      transform: rotate(-24deg);
+    }
+
+
+    /* =========================================================
+       TITLE
+       ========================================================= */
+
+    .service-card h4 {
+      margin: 0;
+
+      font-size: .88rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+
+      position: relative;
+      z-index: 2;
+
+      transition:
+        transform .45s cubic-bezier(.22,1,.36,1),
+        letter-spacing .45s ease;
+    }
+
+
+    .service-card:hover h4 {
+      transform: translateX(4px);
+      letter-spacing: .13em;
+    }
+
+
+    /* =========================================================
+       DESCRIPTION
+       ========================================================= */
+
+    .service-card p {
+      margin: 10px 0 0;
+      max-width: 250px;
+
+      line-height: 1.75;
+
+      position: relative;
+      z-index: 2;
+
+      transition:
+        transform .45s cubic-bezier(.22,1,.36,1),
+        opacity .35s ease;
+    }
+
+
+    .service-card:hover p {
+      transform: translateX(4px);
+    }
+
+
+    /* =========================================================
+       ARROW
+       ========================================================= */
+
+    .service-arrow {
+      position: absolute;
+
+      right: 26px;
+      bottom: 25px;
+
+      font-size: 1rem;
+
+      opacity: .35;
+
+      z-index: 4;
+
+      transition:
+        transform .5s cubic-bezier(.22,1,.36,1),
+        opacity .3s ease;
+    }
+
+
+    .service-card:hover .service-arrow {
+      transform:
+        translate(5px,-5px)
+        scale(1.15);
+
+      opacity: .85;
+    }
+
+
+    /* =========================================================
+       FEATURE SECTION
+       ========================================================= */
+
+    .service-feature {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+
+      margin-top: 70px;
+
+      border-top: 1px solid rgba(0,0,0,.14);
+      border-bottom: 1px solid rgba(0,0,0,.14);
+    }
+
+
+    .service-feature-main {
+      padding: 52px 50px 52px 0;
+
+      border-right: 1px solid rgba(0,0,0,.14);
+    }
+
+
+    .service-feature-main h2 {
+      font-family: var(--serif, Georgia, serif);
+      font-weight: 400;
+
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      line-height: 1.05;
+
+      margin: 15px 0 20px;
+      max-width: 600px;
+    }
+
+
+    .service-feature-main p {
+      max-width: 590px;
+      line-height: 1.9;
+      color: var(--muted);
+    }
+
+
+    .service-feature-side {
+      padding: 52px 0 52px 50px;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+
+    .service-feature-side .mini-line {
+      display: flex;
+      justify-content: space-between;
+
+      gap: 20px;
+
+      padding: 17px 0;
+
+      border-bottom: 1px solid rgba(0,0,0,.12);
+
+      font-size: .82rem;
+
+      transition:
+        padding-left .35s ease,
+        opacity .3s ease;
+    }
+
+
+    .service-feature-side .mini-line:first-child {
+      border-top: 1px solid rgba(0,0,0,.12);
+    }
+
+
+    .service-feature-side .mini-line:hover {
+      padding-left: 8px;
+    }
+
+
+    /* =========================================================
+       FAQ
+       ========================================================= */
+
+    .faq-layout {
+      display: grid;
+
+      grid-template-columns: .75fr 1.25fr;
+
+      gap: 90px;
+
+      margin-top: 20px;
+    }
+
+
+    .faq-heading {
+      position: sticky;
+      top: 100px;
+
+      align-self: start;
+    }
+
+
+    .faq-heading h2 {
+      font-family: var(--serif, Georgia, serif);
+      font-weight: 400;
+
+      font-size: 2.4rem;
+      line-height: 1.1;
+
+      margin-top: 16px;
+    }
+
+
+    .faq-heading p {
+      max-width: 300px;
+
+      color: var(--muted);
+
+      line-height: 1.8;
+
+      margin-top: 18px;
+    }
+
+
+    .faq-item {
+      border-top: 1px solid rgba(0,0,0,.15);
+
+      transition:
+        padding .35s ease;
+    }
+
+
+    .faq-item:last-child {
+      border-bottom: 1px solid rgba(0,0,0,.15);
+    }
+
+
+    .faq-q {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      gap: 30px;
+
+      padding: 22px 0;
+
+      cursor: pointer;
+
+      font-size: .9rem;
+
+      letter-spacing: .01em;
+    }
+
+
+    .faq-toggle {
+      font-family: var(--serif, Georgia, serif);
+
+      font-size: 1.2rem;
+
+      transition:
+        transform .35s cubic-bezier(.22,1,.36,1);
+    }
+
+
+    .faq-a {
+      max-height: 0;
+
+      overflow: hidden;
+
+      opacity: 0;
+
+      transition:
+        max-height .4s ease,
+        opacity .25s ease,
+        padding .35s ease;
+    }
+
+
+    .faq-a p,
+    .faq-a ul {
+      line-height: 1.85;
+
+      color: var(--muted);
+    }
+
+
+    .faq-a ul {
+      padding-left: 18px;
+    }
+
+
+    .faq-item[data-open="true"] .faq-a {
+      max-height: 600px;
+
+      opacity: 1;
+
+      padding: 0 0 24px;
+    }
+
+
+    .faq-item[data-open="true"] .faq-toggle {
+      transform: rotate(45deg);
+    }
+
+
+    /* =========================================================
+       CONCIERGE BAND
+       ========================================================= */
+
+    .concierge-band {
+      margin-top: 80px;
+
+      border-top: 1px solid rgba(255,255,255,.2);
+      border-bottom: 1px solid rgba(255,255,255,.2);
+
+      padding: 55px 0;
+    }
+
+
+    .concierge-band-inner {
+      display: flex;
+
+      justify-content: space-between;
+      align-items: center;
+
+      gap: 40px;
+    }
+
+
+    .concierge-band h3 {
+      margin: 10px 0 0;
+    }
+
+
+    /* =========================================================
+       RESPONSIVE
+       ========================================================= */
+
+    @media (max-width: 1000px) {
+
+      .service-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .service-feature {
+        grid-template-columns: 1fr;
+      }
+
+      .service-feature-main {
+        border-right: 0;
+
+        border-bottom: 1px solid rgba(0,0,0,.14);
+
+        padding-right: 0;
+      }
+
+      .service-feature-side {
+        padding-left: 0;
+      }
+
+      .faq-layout {
+        grid-template-columns: 1fr;
+
+        gap: 45px;
+      }
+
+      .faq-heading {
+        position: static;
+      }
+
+    }
+
+
+    @media (max-width: 620px) {
+
+      .service-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .service-card {
+        min-height: 225px;
+      }
+
+      .service-feature-main,
+      .service-feature-side {
+        padding: 35px 0;
+      }
+
+      .concierge-band-inner {
+        flex-direction: column;
+
+        align-items: flex-start;
+      }
+
+    }
+
+  </style>
+</head>
+
+
+<body data-page="client-services.html">
+
+<div id="site-header" data-variant="light"></div>
+
+
+<!-- =========================================================
+     HERO
+     ========================================================= -->
+
+<section class="hero"
+  style="min-height:46vh; background:none; color:var(--text); align-items:center;">
+
+  <div class="hero-inner" style="color:var(--text);">
+
+    <div class="hero-left">
+
+      <span class="hero-vertical" style="opacity:.5;">
+        Care Beyond the Purchase
+      </span>
+
+      <div>
+
+        <div class="hero-num" style="opacity:.5;">
+        </div>
+
+        <h1 class="hero-title">
+          CLIENT<br>SERVICES
+        </h1>
+
+        <p class="hero-sub" style="color:var(--muted);">
+          Thoughtful service for every CHARMENTIST piece —
+          from the moment of purchase through years of wear,
+          care, and keeping.
+        </p>
+
+        <a class="btn btn-outline" href="#services">
+          Explore Services →
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     SERVICES
+     ========================================================= -->
+
+<section class="section-pad" id="services">
+
+  <div class="wrap">
+
+    <div class="eyebrow">
+      Our Services
+    </div>
+
+    <p class="services-intro">
+      A CHARMENTIST piece is intended to be kept, worn, cared for,
+      and enjoyed over time. Our services are designed to accompany
+      each piece throughout its journey.
+    </p>
+
+
+    <div class="service-grid">
+
+
+      <!-- 01 PRIVATE CONSULTATION -->
+
+      <div class="service-card">
+
+        <div>
+
+          <div class="service-number">
+            01
+          </div>
+
+          <div class="service-symbol">
+            ◌
+          </div>
+
+          <h4>
+            Private Consultation
+          </h4>
+
+          <p class="small">
+            A dedicated consultation for clients seeking guidance
+            on selecting a piece, gemstones, materials, sizing,
+            or a considered purchase.
+          </p>
+
+        </div>
+
+        <span class="service-arrow">
+          ↗
+        </span>
+
+      </div>
+
+
+      <!-- 02 JEWELRY CARE -->
+
+      <div class="service-card">
+
+        <div>
+
+          <div class="service-number">
+            02
+          </div>
+
+          <div class="service-symbol">
+            ◊
+          </div>
+
+          <h4>
+            Jewelry Care
+          </h4>
+
+          <p class="small">
+            Guidance on preserving the finish, brilliance,
+            and condition of your CHARMENTIST jewellery.
+          </p>
+
+        </div>
+
+        <span class="service-arrow">
+          ↗
+        </span>
+
+      </div>
+
+
+      <!-- 03 AFTERCARE -->
+
+      <div class="service-card">
+
+        <div>
+
+          <div class="service-number">
+            03
+          </div>
+
+          <div class="service-symbol">
+            ∞
+          </div>
+
+          <h4>
+            Aftercare
+          </h4>
+
+          <p class="small">
+            Continued assistance for the care and maintenance
+            of your pieces after purchase.
+          </p>
+
+        </div>
+
+        <span class="service-arrow">
+          ↗
+        </span>
+
+      </div>
+
+
+      <!-- 04 SHIPPING -->
+
+      <div class="service-card">
+
+        <div>
+
+          <div class="service-number">
+            04
+          </div>
+
+          <div class="service-symbol">
+            →
+          </div>
+
+          <h4>
+            Shipping
+          </h4>
+
+          <p class="small">
+            Secure, discreet, tracked delivery with appropriate
+            protection throughout transit.
+          </p>
+
+        </div>
+
+        <span class="service-arrow">
+          ↗
+        </span>
+
+      </div>
+
+
+      <!-- 05 RETURNS -->
+
+      <div class="service-card">
+
+        <div>
+
+          <div class="service-number">
+            05
+          </div>
+
+          <div class="service-symbol">
+            ↩
+          </div>
+
+          <h4>
+            Returns
+          </h4>
+
+          <p class="small">
+            Clear and considered return procedures for eligible
+            pieces purchased through our e-shop.
+          </p>
+
+        </div>
+
+        <span class="service-arrow">
+          ↗
+        </span>
+
+      </div>
+
+
+      <!-- 06 CRAFTSMANSHIP -->
+
+      <div class="service-card">
+
+        <div>
+
+          <div class="service-number">
+            06
+          </div>
+
+          <div class="service-symbol">
+            ✦
+          </div>
+
+          <h4>
+            Craftsmanship Guarantee
+          </h4>
+
+          <p class="small">
+            Coverage for eligible manufacturing and structural
+            defects according to our guarantee terms.
+          </p>
+
+        </div>
+
+        <span class="service-arrow">
+          ↗
+        </span>
+
+      </div>
+
+
+      <!-- 07 REPAIRS -->
+
+      <div class="service-card">
+
+        <div>
+
+          <div class="service-number">
+            07
+          </div>
+
+          <div class="service-symbol">
+            ⌁
+          </div>
+
+          <h4>
+            Repairs
+          </h4>
+
+          <p class="small">
+            Professional assessment and repair services for
+            eligible CHARMENTIST pieces.
+          </p>
+
+        </div>
+
+        <span class="service-arrow">
+          ↗
+        </span>
+
+      </div>
+
+
+      <!-- 08 RING RESIZING -->
+
+      <div class="service-card">
+
+        <div>
+
+          <div class="service-number">
+            08
+          </div>
+
+          <div class="service-symbol">
+            ○
+          </div>
+
+          <h4>
+            Ring Resizing
+          </h4>
+
+          <p class="small">
+            Ring sizing assistance for eligible designs,
+            subject to construction and material requirements.
+          </p>
+
+        </div>
+
+        <span class="service-arrow">
+          ↗
+        </span>
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     SERVICE PHILOSOPHY
+     ========================================================= -->
+
+<section class="section-pad" style="padding-top:0;">
+
+  <div class="wrap">
+
+    <div class="service-feature">
+
+      <div class="service-feature-main">
+
+        <div class="eyebrow">
+          The CHARMENTIST Standard
+        </div>
+
+        <h2>
+          Jewellery should be cared for long after it leaves the atelier.
+        </h2>
+
+        <p>
+          Our relationship with a client does not end when an order
+          is delivered. From selecting the right piece to understanding
+          how to care for it, our team remains available to help you
+          preserve the qualities that made the piece yours.
+        </p>
+
+      </div>
+
+
+      <div class="service-feature-side">
+
+        <div class="mini-line">
+          <span>Private Consultation</span>
+          <span>Available</span>
+        </div>
+
+        <div class="mini-line">
+          <span>Care Guidance</span>
+          <span>Available</span>
+        </div>
+
+        <div class="mini-line">
+          <span>Repair Assessment</span>
+          <span>By Request</span>
+        </div>
+
+        <div class="mini-line">
+          <span>Ring Resizing</span>
+          <span>By Request</span>
+        </div>
+
+        <div class="mini-line">
+          <span>Aftercare</span>
+          <span>Available</span>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     FAQ
+     ========================================================= -->
+
+<section class="section-pad" style="padding-top:0;">
+
+  <div class="wrap">
+
+    <div class="faq-layout">
+
+
+      <div class="faq-heading">
+
+        <div class="eyebrow">
+          Frequently Asked
+        </div>
+
+        <h2>
+          Questions,<br>
+          Answered.
+        </h2>
+
+        <p>
+          Everything you need to know about caring for,
+          maintaining, and receiving support for your
+          CHARMENTIST jewellery.
+        </p>
+
+      </div>
+
+
+      <div>
+
+
+        <!-- FAQ 01 -->
+
+        <div class="faq-item" data-open="false">
+
+          <div class="faq-q">
+
+            <span>
+              How do I book a private consultation?
+            </span>
+
+            <span class="faq-toggle">
+              +
+            </span>
+
+          </div>
+
+          <div class="faq-a">
+
+            <p class="small">
+              Private consultations are available for clients
+              who would like dedicated guidance before making
+              a purchase. Contact us through our Contact page
+              to enquire about availability and arrange a consultation.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <!-- FAQ 02 -->
+
+        <div class="faq-item" data-open="false">
+
+          <div class="faq-q">
+
+            <span>
+              How do I care for my jewelry?
+            </span>
+
+            <span class="faq-toggle">
+              +
+            </span>
+
+          </div>
+
+          <div class="faq-a">
+
+            <ul class="small">
+
+              <li>
+                <strong>Storage:</strong>
+                Store each piece separately in its pouch or box
+                to help prevent scratches.
+              </li>
+
+              <li>
+                <strong>Protection:</strong>
+                Avoid prolonged contact with perfume, lotion,
+                water, and harsh chemicals.
+              </li>
+
+              <li>
+                <strong>Daily Cleaning:</strong>
+                Gently wipe the piece with a soft, clean cloth
+                after wearing.
+              </li>
+
+              <li>
+                <strong>Deep Cleaning:</strong>
+                Where appropriate for the material and gemstone,
+                use lukewarm water, mild soap, and a very soft brush.
+                Dry thoroughly afterwards.
+              </li>
+
+            </ul>
+
+          </div>
+
+        </div>
+
+
+        <!-- FAQ 03 -->
+
+        <div class="faq-item" data-open="false">
+
+          <div class="faq-q">
+
+            <span>
+              Does my jewelry come with a warranty?
+            </span>
+
+            <span class="faq-toggle">
+              +
+            </span>
+
+          </div>
+
+          <div class="faq-a">
+
+            <p class="small">
+              Every CHARMENTIST piece is accompanied by our
+              <strong>Craftsmanship Guarantee</strong>, covering
+              eligible structural and manufacturing defects according
+              to the applicable guarantee terms.
+            </p>
+
+            <ul class="small">
+
+              <li>
+                <strong>Covered:</strong>
+                Eligible manufacturing and setting defects.
+              </li>
+
+              <li>
+                <strong>Not Covered:</strong>
+                Normal wear and tear, accidental damage, misuse,
+                alteration, or loss.
+              </li>
+
+              <li>
+                <strong>Repairs:</strong>
+                Eligible pieces may be assessed for repair,
+                stone resetting, or refinishing.
+              </li>
+
+            </ul>
+
+          </div>
+
+        </div>
+
+
+        <!-- FAQ 04 -->
+
+        <div class="faq-item" data-open="false">
+
+          <div class="faq-q">
+
+            <span>
+              Can I resize my ring?
+            </span>
+
+            <span class="faq-toggle">
+              +
+            </span>
+
+          </div>
+
+          <div class="faq-a">
+
+            <p class="small">
+              Many ring designs can be resized, although feasibility
+              depends on the design, construction, gemstone setting,
+              and material. Contact our team with your order information
+              and we will assess the piece with you.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <!-- FAQ 05 -->
+
+        <div class="faq-item" data-open="false">
+
+          <div class="faq-q">
+
+            <span>
+              Can my jewelry be repaired?
+            </span>
+
+            <span class="faq-toggle">
+              +
+            </span>
+
+          </div>
+
+          <div class="faq-a">
+
+            <p class="small">
+              Repair requests are assessed individually. Depending on
+              the condition and construction of the piece, available
+              services may include structural repair, stone resetting,
+              clasp servicing, or refinishing.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <!-- FAQ 06 -->
+
+        <div class="faq-item" data-open="false">
+
+          <div class="faq-q">
+
+            <span>
+              How do I request aftercare?
+            </span>
+
+            <span class="faq-toggle">
+              +
+            </span>
+
+          </div>
+
+          <div class="faq-a">
+
+            <p class="small">
+              Contact our team with your order details and a description
+              of the service you require. We will guide you through the
+              appropriate next steps.
+            </p>
+
+          </div>
+
+        </div>
+
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     CTA
+     ========================================================= -->
+
+<section class="dark-band section-pad">
+
+  <div class="wrap">
+
+    <div class="concierge-band">
+
+      <div class="concierge-band-inner">
+
+        <div>
+
+          <p class="eyebrow" style="margin:0;">
+            Private Consultation
+          </p>
+
+          <h3 class="serif" style="font-size:1.6rem;">
+            A more personal way to discover CHARMENTIST.
+          </h3>
+
+        </div>
+
+        <a class="btn btn-outline"
+           href="contact.html"
+           style="border-color:rgba(255,255,255,.55); color:#fff;">
+          Request a Consultation →
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     FOOTER
+     ========================================================= -->
+
+<div id="site-footer"></div>
+
+
+<script src="assets/js/products.js"></script>
+<script src="assets/js/auth.js"></script>
+<script src="assets/js/store.js"></script>
+<script src="assets/js/main.js"></script>
+
+
+<script>
+
+  document.querySelectorAll('.faq-item').forEach(item => {
+
+    const question = item.querySelector('.faq-q');
+
+    question.addEventListener('click', () => {
+
+      const isOpen =
+        item.getAttribute('data-open') === 'true';
+
+
+      document.querySelectorAll('.faq-item').forEach(other => {
+
+        if (other !== item) {
+          other.setAttribute(
+            'data-open',
+            'false'
+          );
+        }
+
+      });
+
+
+      item.setAttribute(
+        'data-open',
+        isOpen ? 'false' : 'true'
+      );
+
+    });
+
+  });
+
+</script>
+
+
+</body>
+</html>
+```

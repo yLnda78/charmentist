@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title id="page-title">Collection — CHARMENTIST</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="category.html">
+<div id="site-header" data-variant="light"></div>
+
+<section class="hero" style="min-height:38vh; background:none; color:var(--text); align-items:center;">
+  <div class="hero-inner" style="color:var(--text); display:flex; align-items:center; justify-content:space-between;">
+    <div class="hero-left">
+      <div><h1 class="hero-title" id="cat-title" style="font-size:2.6rem;">PIECES</h1>
+        <p class="hero-sub" style="color:var(--muted);" id="cat-sub">Browse every piece in this category, across all collections.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad" style="padding-top:0;">
+  <div class="eyebrow" id="cat-count">The Pieces</div>
+  <div class="grid-4" id="cat-grid"></div>
+  <p class="small" id="cat-empty" style="display:none; margin-top:20px;">No pieces found in this category yet.</p>
+</section>
+
+<div id="site-footer"></div>
+<script src="assets/js/products.js"></script>
+<script src="assets/js/auth.js"></script>
+<script src="assets/js/store.js"></script>
+<script src="assets/js/main.js"></script>
+<script>
+(function(){
+  const params = new URLSearchParams(location.search);
+  const type = params.get('type') || 'ring';
+
+  const labels = {
+    ring: 'Rings',
+    necklace: 'Necklaces',
+    earrings: 'Earrings',
+    bracelet: 'Bracelets'
+  };
+  const label = labels[type] || 'Pieces';
+
+  document.getElementById('page-title').textContent = label + ' — CHARMENTIST';
+  document.getElementById('cat-title').textContent = label.toUpperCase();
+  document.getElementById('cat-sub').textContent = 'Every ' + label.toLowerCase().replace(/s$/, '') + ' across the Frame, Axis, and Balance collections.';
+
+  function renderCategory(){
+    const items = CharmData.byType(type);
+    document.getElementById('cat-count').textContent = items.length + (items.length === 1 ? ' Piece' : ' Pieces');
+
+    const grid = document.getElementById('cat-grid');
+    document.getElementById('cat-empty').style.display = items.length ? 'none' : 'block';
+    grid.innerHTML = items.map(p => `
+      <div class="tile" data-product-id="${p.id}">
+        <a class="tile-link-wrap" href="product.html?id=${p.id}">
+          <div class="tile-img"><img src="${p.img}"></div>
+          <h4>${p.name}</h4>
+          <p class="small">${p.material}</p>
+          <p class="price">${CharmData.formatPrice(p.price)}</p>
+          <p class="small tile-meta">${CharmData.tileMeta(p)}</p>
+        </a>
+        <div class="tile-actions">
+          <button class="icon-btn" data-action="wishlist" aria-label="Save to wishlist"><svg viewBox="0 0 24 24"><path d="M12 20.2s-8-4.9-8-11.1A4.9 4.9 0 0 1 12 6.4 4.9 4.9 0 0 1 20 9.1c0 6.2-8 11.1-8 11.1Z"/></svg></button>
+          <button class="btn btn-outline btn-sm" data-action="add-to-cart">Add to Bag</button>
+        </div>
+      </div>
+    `).join('');
+
+    if(typeof CharmStore !== 'undefined') CharmStore.refreshButtonStates();
+  }
+
+  renderCategory();
+  document.addEventListener('charm:products-synced', renderCategory);
+})();
+</script>
+</body></html>

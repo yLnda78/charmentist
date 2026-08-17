@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title id="page-title">Piece — CHARMENTIST</title><link rel="stylesheet" href="assets/css/style.css"></head>
+<body data-page="product.html">
+<div id="site-header" data-variant="light"></div>
+
+<section class="section-pad grid-2" style="padding-bottom:20px;">
+  <div>
+    <div class="eyebrow" id="p-collection">Collection</div>
+    <h1 class="hero-title" id="p-name" style="color:var(--text); font-size:2.4rem;">PIECE</h1>
+    <p class="body-text" id="p-desc">A study in balance and proportion — where architectural rigor meets form.</p>
+    <p class="small mt-40" id="p-material">18K White Gold, Diamond</p>
+    <p class="serif" id="p-price" style="font-size:1.3rem; margin-top:10px;">$0</p>
+    <div class="small" style="margin-top:22px; line-height:2.1;">
+      <div><strong>Material</strong> — <span id="p-material-2">18K White Gold</span></div>
+      <div><strong>Gemstones</strong> — <span id="p-gemstones">Diamond</span></div>
+      <div><strong>Dimensions</strong> — <span id="p-dimensions">—</span></div>
+      <div><strong>Weight</strong> — <span id="p-weight">—</span></div>
+      <div><strong>Estimated Production</strong> — <span id="p-production">—</span></div>
+    </div>
+    <div id="p-size-wrap" class="size-select-wrap" style="display:none;">
+      <div class="size-select-label"><span>Ring Size</span></div>
+      <div class="size-grid" id="p-size-grid"></div>
+      <p class="size-error" id="p-size-error">Please select a size before adding this piece to your bag.</p>
+      <p class="mto-note" id="p-size-note">Please note, this order will be fulfilled within <span id="p-size-note-weeks">7–8 weeks</span>.</p>
+    </div>
+
+    <div style="display:flex; gap:14px; margin-top:20px; flex-wrap:wrap;" data-product-id="">
+      <button class="btn btn-dark" id="p-add-to-cart">Purchase — Add to Bag</button>
+      <button class="btn btn-outline" data-action="wishlist">Add to Wishlist</button>
+      <a class="btn btn-outline" id="p-inquire-link" href="contact.html">Inquire About This Piece</a>
+    </div>
+
+    <div class="mto-banner"><strong>Made to Order.</strong> Ships in <span id="p-mto-weeks">7–8 weeks</span>. Every piece is hand-finished in-house once your order is placed, so please allow approximately <span id="p-mto-weeks-2">7–8 weeks</span> for production before dispatch.</div>
+  </div>
+  <img id="p-hero-img" src="https://images.unsplash.com/photo-1694062045776-f48d9b6de57e?auto=format&fit=crop&w=700&h=560&q=80">
+</section>
+
+<section class="wrap thumb-row" id="p-thumb-row" style="padding:0 6vw 60px;">
+</section>
+
+<section class="grid-2">
+  <img src="ARC.png">
+  <div class="section-pad">
+    <div class="eyebrow">Design Story</div>
+    <h2 class="section-title">Architecture Made Wearable</h2>
+    <p class="body-text">Inspired by modernist architecture, this piece is a composition of pure geometry and intentional space. The interplay of open forms and precious materials creates a sense of lightness and strength. It's a wearable structure — minimal, timeless, and deeply beautiful.</p>
+    <a class="link-arrow" id="p-collection-link" style="display:inline-block; margin-top:16px;" href="collection-geometry.html">Explore the Collection →</a>
+  </div>
+</section>
+
+<section class="section-pad">
+  <div class="wrap">
+    <div class="eyebrow">Craftsmanship</div>
+    <h2 class="section-title">Made By Hand, In-House</h2>
+    <div class="grid-4 small mt-40">
+      <div><strong>Metal</strong><br><span id="p-metal">18K White Gold</span></div>
+      <div><strong>Craft</strong><br>Hand-finished in-house</div>
+      <div><strong>Setting</strong><br>Hand-selected stones</div>
+      <div><strong>Finish</strong><br>Polished / Brushed</div>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad">
+  <div class="eyebrow">You May Also Love</div>
+  <div class="grid-4" id="p-related"></div>
+</section>
+
+<section class="dark-band section-pad text-center">
+  <div class="eyebrow" style="text-align:center;">A Question About This Piece?</div>
+  <h3 class="serif" style="font-size:1.5rem;">Speak With Our Client Team.</h3>
+  <a class="btn btn-light mt-40" id="p-inquire-band-link" href="contact.html">Inquire About This Piece →</a>
+</section>
+
+<div id="site-footer"></div>
+<script src="assets/js/products.js"></script>
+<script src="assets/js/auth.js"></script>
+<script src="assets/js/store.js"></script>
+<script src="assets/js/main.js"></script>
+<script>
+(function(){
+  const params = new URLSearchParams(location.search);
+  const id = params.get('id');
+
+  // selectedSize/currentProduct are read by the click handlers bound once
+  // below — kept in closure so a later re-render (when fresh data arrives
+  // from the API) can update what they point to without re-binding.
+  let selectedSize = null;
+  let p = null;
+
+  function renderProduct(){
+    const product = id ? CharmData.byId(id) : null;
+    // Fallback: if no id / unknown id, default to the first product so the page never renders blank.
+    p = product || CharmData.all()[0];
+    const col = CharmData.collection(p.collection);
+
+    document.getElementById('page-title').textContent = p.name + ' — CHARMENTIST';
+    document.getElementById('p-collection').textContent = (col ? col.name : 'Collection') + ' Collection';
+    document.getElementById('p-name').innerHTML = p.name.toUpperCase().split(' ').join('<br>');
+    document.getElementById('p-desc').textContent = p.desc;
+    document.getElementById('p-material').textContent = p.material;
+    document.getElementById('p-price').textContent = CharmData.formatPrice(p.price);
+    document.getElementById('p-hero-img').src = p.img;
+
+    // Photo gallery: build the thumbnail row from p.gallery, click to swap the big photo.
+    const heroImg = document.getElementById('p-hero-img');
+    const gallery = (p.gallery && p.gallery.length) ? p.gallery : [p.img];
+    const thumbRow = document.getElementById('p-thumb-row');
+    thumbRow.innerHTML = gallery.map((src, i) => `<img src="${src}" class="${i === 0 ? 'active' : ''}">`).join('');
+    thumbRow.querySelectorAll('img').forEach(thumb => {
+      thumb.addEventListener('click', () => {
+        heroImg.src = thumb.src;
+        thumbRow.querySelectorAll('img').forEach(t => t.classList.remove('active'));
+        thumb.classList.add('active');
+      });
+    });
+    document.getElementById('p-metal').textContent = p.material.split(',')[0];
+    document.getElementById('p-material-2').textContent = p.material.split(',')[0];
+    document.getElementById('p-gemstones').textContent = p.gemstones || '—';
+    document.getElementById('p-dimensions').textContent = p.dimensions || '—';
+    document.getElementById('p-weight').textContent = p.weight || '—';
+    document.getElementById('p-production').textContent = CharmData.productionMeta(p);
+    document.getElementById('p-size-note-weeks').textContent = p.productionTime || '7–8 weeks';
+    document.getElementById('p-mto-weeks').textContent = p.productionTime || '7–8 weeks';
+    document.getElementById('p-mto-weeks-2').textContent = p.productionTime || '7–8 weeks';
+    document.getElementById('p-collection-link').href = col ? col.page : 'collection-geometry.html';
+    document.getElementById('p-collection-link').textContent = 'Explore the ' + (col ? col.name : '') + ' Collection →';
+
+    const inquireHref = 'contact.html?subject=' + encodeURIComponent(p.name) + '&id=' + p.id;
+    document.getElementById('p-inquire-link').href = inquireHref;
+    document.getElementById('p-inquire-band-link').href = inquireHref;
+
+    const actionWrap = document.querySelector('[data-product-id=""]') || document.querySelector('[data-product-id]');
+    if(actionWrap) actionWrap.dataset.productId = p.id;
+
+    // Ring size selector — only rendered for rings. A size must be picked
+    // before "Add to Bag" will proceed. Rebuilt fresh each render, so the
+    // previously selected size (if any) is reset — acceptable since this
+    // only re-runs when a product's own data changes underneath the shopper.
+    selectedSize = null;
+    const sizeWrap = document.getElementById('p-size-wrap');
+    const sizeGrid = document.getElementById('p-size-grid');
+    sizeWrap.style.display = 'none';
+    sizeGrid.innerHTML = '';
+    if(p.type === 'ring'){
+      const sizes = CharmData.ringSizes(p);
+      sizeWrap.style.display = 'block';
+      sizeGrid.innerHTML = sizes.map(s => `<button type="button" class="size-opt" data-size="${s}">${s}</button>`).join('');
+      sizeGrid.querySelectorAll('.size-opt').forEach(btn => {
+        btn.addEventListener('click', () => {
+          selectedSize = btn.dataset.size;
+          sizeGrid.querySelectorAll('.size-opt').forEach(b => b.classList.toggle('is-selected', b === btn));
+          document.getElementById('p-size-error').classList.remove('is-visible');
+        });
+      });
+    }
+
+    // Related items from the same collection
+    const related = CharmData.related(p.id, 4);
+    const relWrap = document.getElementById('p-related');
+    relWrap.innerHTML = related.map(r => `
+      <div class="tile" data-product-id="${r.id}">
+        <a class="tile-link-wrap" href="product.html?id=${r.id}">
+          <div class="tile-img"><img src="${r.img}"></div>
+          <h4>${r.name}</h4>
+          <p class="price">${CharmData.formatPrice(r.price)}</p>
+          <p class="small tile-meta">${CharmData.tileMeta(r)}</p>
+        </a>
+        <div class="tile-actions">
+          <button class="icon-btn" data-action="wishlist" aria-label="Save to wishlist"><svg viewBox="0 0 24 24"><path d="M12 20.2s-8-4.9-8-11.1A4.9 4.9 0 0 1 12 6.4 4.9 4.9 0 0 1 20 9.1c0 6.2-8 11.1-8 11.1Z"/></svg></button>
+          <button class="btn btn-outline btn-sm" data-action="add-to-cart">Add to Bag</button>
+        </div>
+      </div>
+    `).join('');
+
+    if(typeof CharmStore !== 'undefined') CharmStore.refreshButtonStates();
+  }
+
+  // Bound ONCE — these buttons are static elements (never rebuilt via
+  // innerHTML), so binding them again on every re-render would stack up
+  // duplicate handlers and add the item to the bag multiple times per click.
+  document.getElementById('p-add-to-cart').addEventListener('click', () => {
+    if(p.type === 'ring' && !selectedSize){
+      document.getElementById('p-size-error').classList.add('is-visible');
+      document.getElementById('p-size-wrap').scrollIntoView({ behavior:'smooth', block:'center' });
+      return;
+    }
+    CharmStore.addToCart(p.id, 1, selectedSize);
+    if(CharmStore.showBagToast) CharmStore.showBagToast(p.id, 1, selectedSize);
+  });
+
+  renderProduct();
+  document.addEventListener('charm:products-synced', renderProduct);
+  document.addEventListener('DOMContentLoaded', () => {
+    if(typeof CharmStore !== 'undefined') CharmStore.refreshButtonStates();
+  });
+})();
+</script>
+</body></html>

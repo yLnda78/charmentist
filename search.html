@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Search — CHARMENTIST</title><link rel="stylesheet" href="assets/css/style.css">
+<style>
+  .search-plain{ background:var(--dark); color:#fff; padding:90px 5vw 60px; }
+  .search-plain-inner{ max-width:640px; margin:0 auto; text-align:center; }
+  .search-plain h1{ font-family:var(--serif); font-size:clamp(1.8rem,3.6vw,2.6rem); margin-bottom:26px; }
+  .search-hero-input{ background:transparent; border:none; color:#fff; flex:1; outline:none; font-size:.95rem; }
+  .search-hero-input::placeholder{ color:rgba(255,255,255,.55); }
+  .link-arrow{ cursor:pointer; }
+  #search-results-wrap{ display:none; }
+  #search-empty-state{ display:block; }
+  .search-status{ font-size:.8rem; color:var(--muted); margin-bottom:26px; }
+  .result-group + .result-group{ margin-top:56px; }
+  .page-result{ display:block; padding:22px 0; border-bottom:1px solid var(--line); }
+  .page-result h4{ font-family:var(--serif); font-size:1.02rem; font-weight:400; margin-bottom:6px; }
+  .page-result p{ font-size:.82rem; color:var(--muted); line-height:1.6; }
+  .no-results{ padding:60px 0; text-align:center; color:var(--muted); }
+</style>
+</head>
+<body data-page="search.html">
+<div id="site-header" data-variant="dark"></div>
+
+<section class="search-plain">
+  <div class="search-plain-inner">
+    <h1>What are you looking for today?</h1>
+    <div class="panel" style="background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.3); display:flex; align-items:center; gap:10px;">
+      <span>&#9906;</span><input type="text" id="search-input" class="search-hero-input" placeholder="Search for collections, pieces, articles, craftsmanship..." autocomplete="off">
+    </div>
+  </div>
+</section>
+
+<section class="section-pad">
+  <div class="wrap">
+
+    <div id="search-empty-state" class="text-center" style="padding:20px 0 10px;">
+      <p class="small" style="color:var(--muted);">Start typing above to search across collections, pieces, and help articles — try "returns", "shipping", "emerald", or "bespoke".</p>
+    </div>
+
+    <div id="search-results-wrap">
+      <p class="search-status" id="search-status"></p>
+      <div id="search-results"></div>
+    </div>
+
+  </div>
+</section>
+
+<div id="site-footer"></div>
+<script src="assets/js/products.js"></script>
+<script src="assets/js/auth.js"></script>
+<script src="assets/js/store.js"></script>
+<script src="assets/js/main.js"></script>
+<script>
+(function(){
+  const input = document.getElementById('search-input');
+  const emptyState = document.getElementById('search-empty-state');
+  const resultsWrap = document.getElementById('search-results-wrap');
+  const resultsEl = document.getElementById('search-results');
+  const statusEl = document.getElementById('search-status');
+
+  function productTile(p){
+    const a = document.createElement('a');
+    a.className = 'tile';
+    a.href = 'product.html?id=' + encodeURIComponent(p.id);
+    a.innerHTML = `
+      <div class="tile-img"><img src="${p.img}" alt="${p.name}"></div>
+      <h4>${p.name}</h4>
+      <p>${p.material}</p>
+      <p class="price">${CharmData.formatPrice(p.price)}</p>
+      <p class="small tile-meta">${CharmData.tileMeta(p)}</p>
+      <span class="tile-link">View Piece →</span>`;
+    return a;
+  }
+
+  function collectionTile(c){
+    const a = document.createElement('a');
+    a.className = 'tile';
+    a.href = c.page;
+    a.innerHTML = `
+      <div class="tile-img"><img src="${c.hero}" alt="${c.name}"></div>
+      <h4>${c.name}</h4>
+      <p>${c.tagline}</p>
+      <span class="tile-link">Explore Collection →</span>`;
+    return a;
+  }
+
+  function pageResult(pg){
+    const a = document.createElement('a');
+    a.className = 'page-result';
+    a.href = pg.url;
+    a.innerHTML = `<h4>${pg.title}</h4><p>${pg.desc}</p>`;
+    return a;
+  }
+
+  function renderGroup(title, items, makeEl, gridClass){
+    if(!items.length) return null;
+    const group = document.createElement('div');
+    group.className = 'result-group';
+    const heading = document.createElement('div');
+    heading.className = 'eyebrow';
+    heading.textContent = title + ' (' + items.length + ')';
+    group.appendChild(heading);
+    const grid = document.createElement('div');
+    grid.className = gridClass || '';
+    grid.style.marginTop = '24px';
+    items.forEach(item => grid.appendChild(makeEl(item)));
+    group.appendChild(grid);
+    return group;
+  }
+
+  function runSearch(query){
+    const q = query.trim();
+    if(!q){
+      emptyState.style.display = 'block';
+      resultsWrap.style.display = 'none';
+      return;
+    }
+    emptyState.style.display = 'none';
+    resultsWrap.style.display = 'block';
+
+    const { products, collections, pages } = CharmData.search(q);
+    const total = products.length + collections.length + pages.length;
+    resultsEl.innerHTML = '';
+
+    if(total === 0){
+      statusEl.textContent = `No results for "${q}".`;
+      const none = document.createElement('div');
+      none.className = 'no-results';
+      none.innerHTML = `<p class="serif" style="font-size:1.2rem; margin-bottom:10px;">Nothing found for "${q}"</p><p class="small">Try a different term, or <a href="contact.html" style="text-decoration:underline;">contact our concierge</a> for help.</p>`;
+      resultsEl.appendChild(none);
+      return;
+    }
+
+    statusEl.textContent = `${total} result${total===1?'':'s'} for "${q}"`;
+
+    const groups = [
+      renderGroup('Help & Information', pages, pageResult),
+      renderGroup('Collections', collections, collectionTile, 'grid-4'),
+      renderGroup('Pieces', products, productTile, 'grid-4')
+    ].filter(Boolean);
+
+    groups.forEach(g => resultsEl.appendChild(g));
+  }
+
+  let debounceTimer = null;
+  input.addEventListener('input', () => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => runSearch(input.value), 180);
+  });
+
+  document.querySelectorAll('[data-quick-search]').forEach(el => {
+    el.addEventListener('click', () => {
+      const term = el.dataset.quickSearch;
+      input.value = term;
+      runSearch(term);
+      input.focus();
+    });
+  });
+
+  // Support search.html?q=returns links from anywhere else on the site.
+  const params = new URLSearchParams(window.location.search);
+  const initialQuery = params.get('q');
+  if(initialQuery){
+    input.value = initialQuery;
+    runSearch(initialQuery);
+  }
+  input.focus();
+
+  document.addEventListener('charm:products-synced', () => { if(input.value.trim()) runSearch(input.value); });
+})();
+</script>
+</body></html>

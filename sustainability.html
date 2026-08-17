@@ -1,0 +1,1040 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Sustainability — CHARMENTIST</title>
+
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <style>
+    /* =========================================================
+       SUSTAINABILITY — CHARMENTIST
+       Editorial Luxury / No Photography
+       ========================================================= */
+
+    .sustainability-intro {
+      max-width: 690px;
+      margin-top: 22px;
+      color: var(--muted);
+      line-height: 1.9;
+      font-size: .95rem;
+    }
+
+    /* ---------------------------------------------------------
+       PRINCIPLES GRID
+       --------------------------------------------------------- */
+
+    .principles {
+      margin-top: 48px;
+      border-top: 1px solid rgba(0,0,0,.15);
+      border-left: 1px solid rgba(0,0,0,.15);
+
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .principle {
+      min-height: 255px;
+      padding: 30px 28px 34px;
+
+      border-right: 1px solid rgba(0,0,0,.15);
+      border-bottom: 1px solid rgba(0,0,0,.15);
+
+      position: relative;
+      overflow: hidden;
+
+      transition:
+        background .45s ease,
+        transform .45s cubic-bezier(.2,.7,.2,1);
+    }
+
+    .principle::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+
+      width: 0;
+      height: 2px;
+
+      background: currentColor;
+
+      transition: width .45s ease;
+    }
+
+    .principle:hover {
+      background: rgba(0,0,0,.025);
+      transform: translateY(-4px);
+    }
+
+    .principle:hover::after {
+      width: 100%;
+    }
+
+    .principle-number {
+      font-family: var(--serif, Georgia, serif);
+      font-size: .72rem;
+      letter-spacing: .15em;
+      color: var(--muted);
+    }
+
+    .principle-mark {
+      width: 38px;
+      height: 38px;
+
+      margin: 25px 0 23px;
+
+      border: 1px solid rgba(0,0,0,.24);
+      border-radius: 50%;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-family: var(--serif, Georgia, serif);
+      font-size: .9rem;
+
+      transition:
+        transform .5s cubic-bezier(.2,.7,.2,1),
+        background .35s ease,
+        color .35s ease;
+    }
+
+    .principle:hover .principle-mark {
+      transform: rotate(45deg);
+    }
+
+    .principle h4 {
+      margin: 0;
+
+      font-size: .88rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .principle p {
+      margin-top: 11px;
+      max-width: 245px;
+
+      line-height: 1.78;
+    }
+
+
+    /* ---------------------------------------------------------
+       EDITORIAL SECTION
+       --------------------------------------------------------- */
+
+    .editorial-block {
+      display: grid;
+      grid-template-columns: .75fr 1.25fr;
+
+      margin-top: 80px;
+
+      border-top: 1px solid rgba(0,0,0,.15);
+      border-bottom: 1px solid rgba(0,0,0,.15);
+    }
+
+    .editorial-side {
+      padding: 48px 50px 48px 0;
+
+      border-right: 1px solid rgba(0,0,0,.15);
+    }
+
+    .editorial-side h3 {
+      font-family: var(--serif, Georgia, serif);
+      font-weight: 400;
+
+      font-size: clamp(1.7rem, 3vw, 2.5rem);
+      line-height: 1.1;
+
+      margin: 16px 0 0;
+    }
+
+    .editorial-main {
+      padding: 48px 0 48px 50px;
+    }
+
+    .editorial-main p {
+      max-width: 680px;
+
+      color: var(--muted);
+      line-height: 1.9;
+
+      margin: 0 0 20px;
+    }
+
+    .editorial-main p:last-child {
+      margin-bottom: 0;
+    }
+
+
+    /* ---------------------------------------------------------
+       MATERIAL JOURNEY
+       --------------------------------------------------------- */
+
+    .journey {
+      margin-top: 80px;
+
+      border-top: 1px solid rgba(0,0,0,.15);
+    }
+
+    .journey-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+
+      gap: 30px;
+
+      padding: 35px 0 28px;
+
+      border-bottom: 1px solid rgba(0,0,0,.15);
+    }
+
+    .journey-header p {
+      max-width: 430px;
+
+      color: var(--muted);
+      line-height: 1.8;
+      margin: 0;
+    }
+
+    .journey-list {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .journey-step {
+      padding: 30px 28px 35px;
+
+      border-right: 1px solid rgba(0,0,0,.15);
+
+      position: relative;
+      transition:
+        background .4s ease,
+        transform .4s ease;
+    }
+
+    .journey-step:first-child {
+      border-left: 1px solid rgba(0,0,0,.15);
+    }
+
+    .journey-step:hover {
+      background: rgba(0,0,0,.025);
+    }
+
+    .journey-step span {
+      display: block;
+
+      font-family: var(--serif, Georgia, serif);
+      font-size: .72rem;
+
+      color: var(--muted);
+      letter-spacing: .13em;
+
+      margin-bottom: 30px;
+    }
+
+    .journey-step h4 {
+      margin: 0 0 10px;
+
+      font-size: .86rem;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+
+    .journey-step p {
+      margin: 0;
+
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+
+    /* ---------------------------------------------------------
+       RESPONSIBLE PROGRESS
+       --------------------------------------------------------- */
+
+    .progress-section {
+      margin-top: 80px;
+
+      padding: 65px 0;
+
+      border-top: 1px solid rgba(255,255,255,.18);
+      border-bottom: 1px solid rgba(255,255,255,.18);
+    }
+
+    .progress-layout {
+      display: grid;
+      grid-template-columns: .8fr 1.2fr;
+
+      gap: 80px;
+
+      align-items: start;
+    }
+
+    .progress-title {
+      font-family: var(--serif, Georgia, serif);
+      font-weight: 400;
+
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1.05;
+
+      margin-top: 15px;
+    }
+
+    .progress-copy {
+      max-width: 650px;
+
+      color: rgba(255,255,255,.68);
+      line-height: 1.9;
+
+      margin: 0;
+    }
+
+    .progress-points {
+      margin-top: 32px;
+
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+
+      border-top: 1px solid rgba(255,255,255,.16);
+      border-left: 1px solid rgba(255,255,255,.16);
+    }
+
+    .progress-point {
+      padding: 20px;
+
+      border-right: 1px solid rgba(255,255,255,.16);
+      border-bottom: 1px solid rgba(255,255,255,.16);
+
+      transition: background .35s ease;
+    }
+
+    .progress-point:hover {
+      background: rgba(255,255,255,.035);
+    }
+
+    .progress-point strong {
+      display: block;
+
+      font-size: .78rem;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+
+      margin-bottom: 7px;
+    }
+
+    .progress-point span {
+      color: rgba(255,255,255,.6);
+      font-size: .82rem;
+      line-height: 1.6;
+    }
+
+
+    /* ---------------------------------------------------------
+       CTA
+       --------------------------------------------------------- */
+
+    .sustainability-cta {
+      text-align: center;
+
+      padding: 80px 20px;
+    }
+
+    .sustainability-cta h3 {
+      font-family: var(--serif, Georgia, serif);
+      font-weight: 400;
+
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+
+      margin: 12px 0 14px;
+    }
+
+    .sustainability-cta p {
+      max-width: 560px;
+      margin: 0 auto;
+
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .sustainability-cta .link-arrow {
+      display: inline-block;
+      margin-top: 24px;
+    }
+
+
+    /* ---------------------------------------------------------
+       RESPONSIVE
+       --------------------------------------------------------- */
+
+    @media (max-width: 1000px) {
+
+      .principles {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .journey-list {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .journey-step:nth-child(3) {
+        border-left: 1px solid rgba(0,0,0,.15);
+      }
+
+      .editorial-block {
+        grid-template-columns: 1fr;
+      }
+
+      .editorial-side {
+        border-right: 0;
+        border-bottom: 1px solid rgba(0,0,0,.15);
+
+        padding-right: 0;
+      }
+
+      .editorial-main {
+        padding-left: 0;
+      }
+
+      .progress-layout {
+        grid-template-columns: 1fr;
+
+        gap: 35px;
+      }
+    }
+
+
+    @media (max-width: 620px) {
+
+      .principles,
+      .journey-list {
+        grid-template-columns: 1fr;
+      }
+
+      .principle {
+        min-height: 220px;
+      }
+
+      .journey-step,
+      .journey-step:nth-child(3) {
+        border-left: 1px solid rgba(0,0,0,.15);
+      }
+
+      .journey-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .progress-points {
+        grid-template-columns: 1fr;
+      }
+
+      .editorial-side,
+      .editorial-main {
+        padding: 35px 0;
+      }
+
+      .progress-section {
+        padding: 45px 0;
+      }
+
+      .sustainability-cta {
+        padding: 60px 20px;
+      }
+    }
+  </style>
+</head>
+
+
+<body data-page="sustainability.html">
+
+<div id="site-header" data-variant="light"></div>
+
+
+<!-- =========================================================
+     HERO
+     ========================================================= -->
+
+<section
+  class="hero"
+  style="min-height:52vh; background:none; color:var(--text); align-items:center;"
+>
+
+  <div class="hero-inner" style="color:var(--text);">
+
+    <div class="hero-left">
+
+      <span class="hero-vertical" style="opacity:.5;">
+        Designed With Intention
+      </span>
+
+      <div>
+
+        <div class="hero-num" style="opacity:.5;">
+        </div>
+
+        <h1 class="hero-title">
+          SUSTAIN<br>ABILITY
+        </h1>
+
+        <p class="hero-sub sustainability-intro">
+          A considered approach to materials, craftsmanship,
+          production, and longevity — because luxury should be
+          made to last.
+        </p>
+
+        <a class="btn btn-outline" href="#approach">
+          Our Approach →
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     APPROACH
+     ========================================================= -->
+
+<section class="section-pad" id="approach">
+
+  <div class="wrap">
+
+    <div class="eyebrow">
+      Our Approach
+    </div>
+
+    <div class="editorial-block">
+
+      <div class="editorial-side">
+
+        <div class="eyebrow">
+          A Different Pace
+        </div>
+
+        <h3>
+          Luxury made with intention,
+          not excess.
+        </h3>
+
+      </div>
+
+
+      <div class="editorial-main">
+
+        <p>
+          CHARMENTIST approaches jewellery as something to be
+          kept rather than quickly replaced. Our collections are
+          developed with attention to material selection,
+          construction, craftsmanship, and the life of each piece
+          after it leaves the atelier.
+        </p>
+
+        <p>
+          By producing pieces in considered quantities and,
+          where applicable, to order, we aim to avoid unnecessary
+          production while giving greater attention to each creation.
+        </p>
+
+        <p>
+          We are a growing jewellery house, and our approach to
+          responsible production continues to evolve alongside the
+          brand.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     CORE PRINCIPLES
+     ========================================================= -->
+
+<section class="section-pad" style="padding-top:0;">
+
+  <div class="wrap">
+
+    <div class="eyebrow">
+      Our Principles
+    </div>
+
+    <div class="principles">
+
+
+      <!-- 01 -->
+      <div class="principle">
+
+        <div class="principle-number">
+          01
+        </div>
+
+        <div class="principle-mark">
+          ◇
+        </div>
+
+        <h4>
+          Considered Materials
+        </h4>
+
+        <p class="small">
+          Materials are selected with attention to quality,
+          durability, suitability, and responsible sourcing
+          wherever practical.
+        </p>
+
+      </div>
+
+
+      <!-- 02 -->
+      <div class="principle">
+
+        <div class="principle-number">
+          02
+        </div>
+
+        <div class="principle-mark">
+          ∙
+        </div>
+
+        <h4>
+          Made With Purpose
+        </h4>
+
+        <p class="small">
+          Selected pieces are produced in limited quantities
+          or made to order, helping us keep production aligned
+          with genuine demand.
+        </p>
+
+      </div>
+
+
+      <!-- 03 -->
+      <div class="principle">
+
+        <div class="principle-number">
+          03
+        </div>
+
+        <div class="principle-mark">
+          ✦
+        </div>
+
+        <h4>
+          Craftsmanship
+        </h4>
+
+        <p class="small">
+          We work with experienced jewellery makers and artisan
+          partners whose skills allow each piece to be carefully
+          constructed and finished.
+        </p>
+
+      </div>
+
+
+      <!-- 04 -->
+      <div class="principle">
+
+        <div class="principle-number">
+          04
+        </div>
+
+        <div class="principle-mark">
+          ∞
+        </div>
+
+        <h4>
+          Designed to Last
+        </h4>
+
+        <p class="small">
+          Timeless construction and considered design are central
+          to our belief that jewellery should remain meaningful
+          beyond seasonal trends.
+        </p>
+
+      </div>
+
+
+      <!-- 05 -->
+      <div class="principle">
+
+        <div class="principle-number">
+          05
+        </div>
+
+        <div class="principle-mark">
+          ↻
+        </div>
+
+        <h4>
+          Repair & Restoration
+        </h4>
+
+        <p class="small">
+          Proper care, repair, resizing, and restoration can extend
+          the useful life of a piece and preserve its character
+          for years to come.
+        </p>
+
+      </div>
+
+
+      <!-- 06 -->
+      <div class="principle">
+
+        <div class="principle-number">
+          06
+        </div>
+
+        <div class="principle-mark">
+          □
+        </div>
+
+        <h4>
+          Reusable Packaging
+        </h4>
+
+        <p class="small">
+          Our protective packaging is designed to be kept and
+          reused as part of the long-term care of your jewellery.
+        </p>
+
+      </div>
+
+
+      <!-- 07 -->
+      <div class="principle">
+
+        <div class="principle-number">
+          07
+        </div>
+
+        <div class="principle-mark">
+          +
+        </div>
+
+        <h4>
+          Long-Term Care
+        </h4>
+
+        <p class="small">
+          Aftercare and maintenance support help keep pieces
+          wearable, cared for, and appreciated long after purchase.
+        </p>
+
+      </div>
+
+
+      <!-- 08 -->
+      <div class="principle">
+
+        <div class="principle-number">
+          08
+        </div>
+
+        <div class="principle-mark">
+          ○
+        </div>
+
+        <h4>
+          Continuous Progress
+        </h4>
+
+        <p class="small">
+          As CHARMENTIST grows, we continue to review our materials,
+          production practices, and partnerships to make more
+          considered choices.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     MATERIAL JOURNEY
+     ========================================================= -->
+
+<section class="section-pad" style="padding-top:0;">
+
+  <div class="wrap">
+
+    <div class="journey">
+
+      <div class="journey-header">
+
+        <div>
+
+          <div class="eyebrow">
+            The Journey of a Piece
+          </div>
+
+        </div>
+
+        <p>
+          Responsibility does not begin and end with sourcing.
+          It continues through production, ownership, care,
+          and the life of the jewellery itself.
+        </p>
+
+      </div>
+
+
+      <div class="journey-list">
+
+        <div class="journey-step">
+
+          <span>
+            01 / SELECT
+          </span>
+
+          <h4>
+            Materials
+          </h4>
+
+          <p class="small">
+            Precious metals and gemstones are selected according
+            to the requirements of each design and the standards
+            we seek to maintain.
+          </p>
+
+        </div>
+
+
+        <div class="journey-step">
+
+          <span>
+            02 / CREATE
+          </span>
+
+          <h4>
+            Craft
+          </h4>
+
+          <p class="small">
+            Skilled jewellery makers transform the selected
+            materials through a considered process of construction,
+            setting, polishing, and finishing.
+          </p>
+
+        </div>
+
+
+        <div class="journey-step">
+
+          <span>
+            03 / KEEP
+          </span>
+
+          <h4>
+            Ownership
+          </h4>
+
+          <p class="small">
+            Each piece is designed to become part of a wardrobe,
+            collection, or personal story rather than a temporary
+            purchase.
+          </p>
+
+        </div>
+
+
+        <div class="journey-step">
+
+          <span>
+            04 / PRESERVE
+          </span>
+
+          <h4>
+            Aftercare
+          </h4>
+
+          <p class="small">
+            Cleaning, resizing, repair, and restoration help extend
+            the life of a CHARMENTIST creation for as long as
+            possible.
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     CONTINUOUS PROGRESS
+     ========================================================= -->
+
+<section class="dark-band">
+
+  <div class="wrap">
+
+    <div class="progress-section">
+
+      <div class="progress-layout">
+
+        <div>
+
+          <div class="eyebrow">
+            Looking Forward
+          </div>
+
+          <h2 class="progress-title">
+            Responsibility is
+            an ongoing practice.
+          </h2>
+
+        </div>
+
+
+        <div>
+
+          <p class="progress-copy">
+            CHARMENTIST is still a young jewellery house.
+            We do not believe in presenting sustainability as
+            a finished achievement. Instead, we see it as an
+            ongoing process of making better decisions as our
+            capabilities, partnerships, and understanding develop.
+          </p>
+
+
+          <div class="progress-points">
+
+            <div class="progress-point">
+
+              <strong>
+                Material Review
+              </strong>
+
+              <span>
+                Continuing to evaluate material choices and
+                sourcing practices.
+              </span>
+
+            </div>
+
+
+            <div class="progress-point">
+
+              <strong>
+                Production
+              </strong>
+
+              <span>
+                Keeping production considered and aligned
+                with demand wherever possible.
+              </span>
+
+            </div>
+
+
+            <div class="progress-point">
+
+              <strong>
+                Craftsmanship
+              </strong>
+
+              <span>
+                Supporting skilled makers and careful
+                jewellery construction.
+              </span>
+
+            </div>
+
+
+            <div class="progress-point">
+
+              <strong>
+                Longevity
+              </strong>
+
+              <span>
+                Encouraging care, repair, restoration,
+                and long-term ownership.
+              </span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     CTA
+     ========================================================= -->
+
+<section class="section-pad sustainability-cta">
+
+  <div class="wrap">
+
+    <p class="eyebrow">
+      Discover More
+    </p>
+
+    <h3>
+      Made to be kept.
+    </h3>
+
+    <p>
+      Explore the craftsmanship, care, and authenticity behind
+      every CHARMENTIST creation.
+    </p>
+
+    <a
+      class="link-arrow"
+      href="craftsmanship.html"
+    >
+      Discover Our Craftsmanship →
+    </a>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     FOOTER
+     ========================================================= -->
+
+<div id="site-footer"></div>
+
+
+<script src="assets/js/products.js"></script>
+<script src="assets/js/auth.js"></script>
+<script src="assets/js/store.js"></script>
+<script src="assets/js/main.js"></script>
+
+</body>
+</html>
