@@ -195,7 +195,7 @@ function renderFooter(){
         <a href="contact.html">Contact</a>
       </div>
       <div class="footer-bottom">
-        <span>&copy; CHARMENTIST 2024</span>
+        <span>&copy; CHARMENTIST 2026</span>
         <div style="display:flex;gap:22px;">
           <a href="privacy-legal.html">Privacy Policy</a>
           <a href="terms-conditions.html">Terms &amp; Conditions</a>
