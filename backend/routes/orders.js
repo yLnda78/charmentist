@@ -4,6 +4,7 @@ const midtransClient = require('midtrans-client');
 const db = require('../db');
 const { optionalAuth, requireAuth } = require('../middleware/auth');
 const { sendMail } = require('../utils/mail');
+const { getUsdToIdrRate } = require('../utils/fx');
 
 const router = express.Router();
 
@@ -614,17 +615,58 @@ router.post(
       try {
 
         /*
-          IMPORTANT:
-          Midtrans expects IDR for this setup.
+          Midtrans only accepts IDR, as a whole number with no decimals.
+          The product database (and therefore `total`/`subtotal`/item
+          prices computed above) is in USD, so everything sent to
+          Midtrans has to be converted using a live USD -> IDR rate —
+          never sent as raw USD numbers, which would charge a wildly
+          wrong amount.
 
-          The current product database uses USD prices,
-          so this transaction should NOT be considered
-          production-ready until the backend has a proper
-          USD → IDR conversion layer.
-
-          For development we keep the transaction amount
-          equal to the backend order total.
+          Item-level prices are converted and rounded individually,
+          then any rounding gap versus the overall gross_amount is
+          folded into the last line item so Midtrans's line-item sum
+          always matches gross_amount exactly.
         */
+
+        const idrRate =
+          await getUsdToIdrRate();
+
+        const grossAmountIdr =
+          Math.round(total * idrRate);
+
+        const idrLineItems = [
+
+          ...orderItems.map(i => ({
+            id: i.id,
+            name: i.name.slice(0, 50),
+            price: Math.round(i.price * idrRate),
+            quantity: i.qty
+          })),
+
+          ...(finalShippingCost > 0
+            ? [{
+                id: deliveryMethod,
+                name: finalDeliveryMethodLabel,
+                price: Math.round(finalShippingCost * idrRate),
+                quantity: 1
+              }]
+            : [])
+
+        ];
+
+        const lineItemSum =
+          idrLineItems.reduce(
+            (sum, i) => sum + i.price * i.quantity,
+            0
+          );
+
+        const roundingGap =
+          grossAmountIdr - lineItemSum;
+
+        if (roundingGap !== 0 && idrLineItems.length > 0) {
+          const last = idrLineItems[idrLineItems.length - 1];
+          last.price += Math.round(roundingGap / last.quantity);
+        }
 
         const transaction =
           await snap.createTransaction({
@@ -635,7 +677,7 @@ router.post(
                 orderNumber,
 
               gross_amount:
-                total
+                grossAmountIdr
 
             },
 
@@ -652,34 +694,8 @@ router.post(
 
             },
 
-            item_details: [
-
-              ...orderItems.map(i => ({
-
-                id:
-                  i.id,
-
-                name:
-                  i.name.slice(0, 50),
-
-                price:
-                  i.price,
-
-                quantity:
-                  i.qty
-
-              })),
-
-              ...(finalShippingCost > 0
-                ? [{
-                    id: deliveryMethod,
-                    name: finalDeliveryMethodLabel,
-                    price: finalShippingCost,
-                    quantity: 1
-                  }]
-                : [])
-
-            ]
+            item_details:
+              idrLineItems
 
           });
 
@@ -714,6 +730,15 @@ router.post(
           'Midtrans transaction failed:',
           err.message
         );
+
+        /*
+          If we can't get a trustworthy IDR rate (or Midtrans itself
+          fails), do NOT silently fall back to charging the raw USD
+          number as IDR — that would undercharge by roughly 15,000x.
+          The order is still saved as 'pending' with no snap token;
+          the checkout page should show a "payment temporarily
+          unavailable, please retry" state when snapToken is null.
+        */
 
       }
 
