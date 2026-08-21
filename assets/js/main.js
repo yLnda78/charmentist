@@ -64,8 +64,13 @@ function renderHeader(){
   const utilityLinks = UTILITY_LINKS.map(([label,href])=>`<a href="${href}">${label}</a>`).join('');
 
   el.innerHTML = `
-    <nav class="main-nav">${navLinks}</nav>
-    <span class="menu-toggle" aria-label="Menu">${ICONS.menu}</span>
+    <nav class="main-nav">
+      <button type="button" class="mobile-nav-close" aria-label="Close menu">
+        <svg viewBox="0 0 24 24"><line x1="4" y1="4" x2="20" y2="20"/><line x1="20" y1="4" x2="4" y2="20"/></svg>
+      </button>
+      ${navLinks}
+    </nav>
+    <button type="button" class="menu-toggle" aria-label="Menu" aria-expanded="false">${ICONS.menu}</button>
     <a class="logo" href="index.html">CHARMENTIST</a>
     <div class="header-right">
       <nav class="header-utility">${utilityLinks}</nav>
@@ -78,8 +83,63 @@ function renderHeader(){
     </div>
     ${megaPanels}
   `;
+  if(!document.querySelector('.mobile-nav-backdrop')){
+    const backdrop = document.createElement('div');
+    backdrop.className = 'mobile-nav-backdrop';
+    el.insertAdjacentElement('afterend', backdrop);
+  }
   if(typeof CharmStore !== 'undefined') CharmStore.updateBadges();
   initMegaMenu();
+  initMobileMenu();
+}
+
+// Hamburger menu: opens/closes the mobile nav drawer. Works alongside
+// initMegaMenu(), which already handles tap-to-expand for the
+// Collection sub-menu on touch devices.
+function initMobileMenu(){
+  const header = document.getElementById('site-header');
+  if(!header) return;
+  const toggle = header.querySelector('.menu-toggle');
+  const nav = header.querySelector('nav.main-nav');
+  const closeBtn = header.querySelector('.mobile-nav-close');
+  const backdrop = document.querySelector('.mobile-nav-backdrop');
+  if(!toggle || !nav) return;
+
+  const open = () => {
+    header.classList.add('mobile-nav-open');
+    toggle.setAttribute('aria-expanded', 'true');
+    if(backdrop) backdrop.classList.add('is-visible');
+    document.body.style.overflow = 'hidden';
+  };
+  const close = () => {
+    header.classList.remove('mobile-nav-open');
+    toggle.setAttribute('aria-expanded', 'false');
+    if(backdrop) backdrop.classList.remove('is-visible');
+    document.body.style.overflow = '';
+  };
+
+  toggle.addEventListener('click', () => {
+    header.classList.contains('mobile-nav-open') ? close() : open();
+  });
+  if(closeBtn) closeBtn.addEventListener('click', close);
+  if(backdrop) backdrop.addEventListener('click', close);
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'Escape') close();
+  });
+  // Any real navigation link inside the drawer should close it first,
+  // but not the mega-trigger label itself (that just expands the panel).
+  nav.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', (e) => {
+      const trigger = a.closest('.nav-item[data-mega-trigger]');
+      const isMegaLabel = trigger && a === trigger.querySelector(':scope > a');
+      if(isMegaLabel && window.matchMedia('(max-width:960px)').matches) return; // let it expand, don't close
+      close();
+    });
+  });
+  // Collapse the drawer automatically if the viewport grows past mobile.
+  window.addEventListener('resize', () => {
+    if(window.innerWidth > 960) close();
+  });
 }
 
 function initMegaMenu(){
