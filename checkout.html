@@ -3130,6 +3130,30 @@ async function handlePlaceOrder(){
 
 
     /*
+      If this was supposed to be a Midtrans gateway payment
+      (card/qris) but the backend couldn't create a snap token
+      (e.g. the live USD -> IDR rate was unavailable), do NOT
+      show a success screen — the customer hasn't actually paid.
+    */
+
+    if(order.paymentMethod === 'card' || order.paymentMethod === 'qris'){
+
+      alert(
+        `We couldn't start the secure payment for this order right now. ` +
+        `Order ${result.orderNumber} was saved, but please try paying again in a moment.`
+      );
+
+      button.disabled =
+        false;
+
+      button.textContent =
+        'Place Order →';
+
+      return;
+
+    }
+
+    /*
       Non-gateway / assisted payment.
 
       Order is created, but we do NOT claim
